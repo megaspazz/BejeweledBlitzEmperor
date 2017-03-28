@@ -1,0 +1,21 @@
+﻿<Window x:Class="BejeweledBlitzEmperor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BejeweledBlitzEmperor"
+        mc:Ignorable="d"
+        Topmost="True"
+        Title="MainWindow" SizeToContent="Height" Width="250">
+    <StackPanel>
+        <Button x:Name="btnGetBoard" Content="Get Board" Click="btnGetBoard_Click" />
+        <Button x:Name="btnGetBoardFromPause" Content="Get Board (From Pause)" Click="btnGetBoardFromPause_Click" />
+        <Button x:Name="btnSpeedTest" Content="Speed Test" Click="btnSpeedTest_Click" />
+        <Button x:Name="btnRecordSquare" Content="Record Square" Click="btnRecordSquare_Click" />
+        <Button x:Name="btnRecordSquareFromPause" Content="Record Square (From Pause)" Click="btnRecordSquareFromPause_Click" />
+        <Button x:Name="btnGetMoves" Content="GetMoves" Click="btnGetMoves_Click" />
+        <Button x:Name="btnSimulateOneMove" Content="Simulate One Move" Height="160" Click="btnSimulateOneMove_Click" />
+        <Button x:Name="btnRunTimedAsync" Content="Run Timed Async" Click="btnRunTimedAsync_Click" />
+        <Button x:Name="btnStopAsync" Content="Stop Async" Click="btnStopAsync_Click" />
+    </StackPanel>
+</Window>
