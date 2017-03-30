@@ -100,6 +100,9 @@ namespace BejeweledBlitzEmperor
             // x7 RED
             AddSignature(new int[] { 16777215, 12064548, 16777215, 16777215, 15601695, 16716322, 16388385, 16716322 }, GemColor.Red, GemType.X7);
 
+            // x8 RED
+            AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 11930648, 5506315, 10750741, 7493464 }, GemColor.Red, GemType.X8);
+
             #endregion
 
             #region Green
@@ -204,6 +207,7 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 14540768, 16777215, 14540253, 12303291, 2193088, 2325964, 2525664, 2658538 }, GemColor.Blue, GemType.X5);
 
             // x6 BLUE
+            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 996952, 16777215, 997209, 16777215 }, GemColor.Blue, GemType.X6);
 
             // x7 BLUE
             AddSignature(new int[] { 16777215, 2782904, 16777215, 16777215, 2724590, 2924031, 2857466, 2924031 }, GemColor.Blue, GemType.X7);
@@ -320,7 +324,8 @@ namespace BejeweledBlitzEmperor
             // x7 PURPLE
             AddSignature(new int[] { 16777215, 10557601, 16777215, 16777215, 13504973, 14488540, 14160599, 14488540 }, GemColor.Purple, GemType.X7);
 
-            // x8 PURPLE
+            // x8 PURPLE (during Blazing Speed)
+            AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 10292637, 4785737, 9309325, 7231342 }, GemColor.Purple, GemType.X8);
 
             #endregion
 
@@ -425,6 +430,7 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 4868682, 16777215, 4934475, 16777215 }, GemColor.White, GemType.X6);
 
             // x7 WHITE
+            AddSignature(new int[] { 16777215, 10395294, 16777215, 16777215, 13092807, 14079702, 13750737, 14079702 }, GemColor.White, GemType.X7);
 
             // x8 WHITE
             AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 10000536, 4671303, 9013641, 7237230 }, GemColor.White, GemType.X8);
