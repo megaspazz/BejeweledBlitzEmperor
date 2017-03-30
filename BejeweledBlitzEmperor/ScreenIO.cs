@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BejeweledBlitzEmperor
 {
@@ -12,12 +13,16 @@ namespace BejeweledBlitzEmperor
         // Top-left corner of the game area
         // Hard-coded for Chrome browser in Windows 10 OS
         public static Point PT_BOARD = new Point(522, 348);
+        public static Point OFF_BOARD = new Point(175, 109);
 
         public static Point OFF_MENU = new Point(-87, 333);
         public static Point OFF_RESUME = new Point(166, 240);
 
         public static int BOX_SIZE = 40;
         public static int BOARD_DIM = 8;
+
+        public static int[] CLR_WHITE = { 255, 255, 255 };
+        public static int[] CLR_FLASH_CORNER = { 57, 21, 80 };
 
         // Measured from center, which is rounded up for even number box size.
         // In the diagram below, the x's are potential centers, and the o is the actual center
@@ -128,6 +133,48 @@ namespace BejeweledBlitzEmperor
         public static void MakeMove(Move mv)
         {
             InputWrapper.ClickAndDrag(GetBoxCenterOnScreen(mv.From), GetBoxCenterOnScreen(mv.To));
+        }
+
+        public static Point FindFlashWindowTopLeft()
+        {
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                Rectangle bounds = screen.Bounds;
+                using (Bitmap bmp = WindowWrapper.ScreenCapture(bounds))
+                {
+                    using (Bitmap24 bmp24 = Bitmap24.FromImage(bmp))
+                    {
+                        bmp24.Lock();
+                        for (int x = 1; x < bounds.Width; ++x)
+                        {
+                            for (int y = 1; y < bounds.Height; ++y)
+                            {
+                                int[] pxLT = bmp24.GetPixel(x - 1, y - 1);
+                                int[] pxRT = bmp24.GetPixel(x, y - 1);
+                                int[] pxLB = bmp24.GetPixel(x - 1, y);
+                                int[] pxRB = bmp24.GetPixel(x, y);
+                                if (Bitmap24.PixelEqual(pxLT, CLR_WHITE) && Bitmap24.PixelEqual(pxRT, CLR_WHITE) && Bitmap24.PixelEqual(pxLB, CLR_WHITE) && Bitmap24.PixelEqual(pxRB, CLR_FLASH_CORNER))
+                                {
+                                    return new Point(x, y);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return Point.Empty;    // return some flag that can't be a valid point
+        }
+
+        public static bool AutoSetBoardPoint()
+        {
+            Point pt = FindFlashWindowTopLeft();
+            if (pt == Point.Empty)
+            {
+                return false;
+            }
+
+            PT_BOARD = new Point(pt.X + OFF_BOARD.X, pt.Y + OFF_BOARD.Y);
+            return true;
         }
     }
 

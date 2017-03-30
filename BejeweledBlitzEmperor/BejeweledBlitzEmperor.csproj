@@ -64,7 +64,8 @@
     <Compile Include="Controls\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameBot.cs" />
+    <Compile Include="GameBots\GameBot.cs" />
+    <Compile Include="GameBots\RandomBot.cs" />
     <Compile Include="Gem.cs" />
     <Compile Include="GemBoard.cs" />
     <Compile Include="GemParser.cs" />

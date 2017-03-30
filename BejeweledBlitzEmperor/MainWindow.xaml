@@ -17,5 +17,7 @@
         <Button x:Name="btnSimulateOneMove" Content="Simulate One Move" Height="160" Click="btnSimulateOneMove_Click" />
         <Button x:Name="btnRunTimedAsync" Content="Run Timed Async" Click="btnRunTimedAsync_Click" />
         <Button x:Name="btnStopAsync" Content="Stop Async" Click="btnStopAsync_Click" />
+        <Button x:Name="btnGetHandleAndRect" Content="Get Handle And Rect" Click="btnGetHandleAndRect_Click" />
+        <Button x:Name="btnAutoDetectGamePos" Content="Auto Detect Game Position" Click="btnAutoDetectGamePos_Click" />
     </StackPanel>
 </Window>

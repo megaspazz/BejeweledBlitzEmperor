@@ -200,7 +200,7 @@ namespace BejeweledBlitzEmperor
             }
         }
 
-        private GameBot _bot = new GameBot();
+        private GameBot _bot = new RandomBot();
         private void btnRunTimedAsync_Click(object sender, RoutedEventArgs e)
         {
             if (_bot.Running)
@@ -223,6 +223,27 @@ namespace BejeweledBlitzEmperor
         private void btnStopAsync_Click(object sender, RoutedEventArgs e)
         {
             _bot.StopAsync();
+        }
+
+        private void btnGetHandleAndRect_Click(object sender, RoutedEventArgs e)
+        {
+            IntPtr handle = WindowWrapper.GetHandleFromCursor();
+            string name = WindowWrapper.GetText(handle);
+            Rectangle rect = WindowWrapper.GetClientArea(handle);
+            this.btnGetHandleAndRect.Content = string.Format("Handle: {0}, Name: {1}, Rect: {2}", handle, name, rect);
+        }
+
+        private void btnAutoDetectGamePos_Click(object sender, RoutedEventArgs e)
+        {
+            if (ScreenIO.AutoSetBoardPoint())
+            {
+                // Note that even though this may succeed, it may fail if it is able to detect the top corner pixel color somewhere else, like if there was another instance of the game open.
+                MessageBox.Show("The position of the flash game has been properly set.", "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Unable to automatically detect the position of the flash game.  Please make sure that the game has fully loaded and that the entire flash game is visible on your screen.", "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
