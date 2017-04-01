@@ -91,14 +91,30 @@ namespace BejeweledBlitzEmperor
                 ),
                 delegate()
                 {
-                    // X button to close friends popup
+                    // X button to close Friends popup
                     Point orig = Cursor.Position;
                     ScreenIO.ClickRelativeToGame(677, 35);
                     Cursor.Position = orig;
                 }
             ),
 
-            // Awesome Game popup screen
+            // Message Center popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(67, 40), new int[] { 222, 149, 45 }),
+                    new PixelCheck(new Point(360, 27), new int[] { 168, 12, 78 }),
+                    new PixelCheck(new Point(720, 29), new int[] { 141, 50, 71 })
+                ),
+                delegate()
+                {
+                    // X button to close Message Center popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(678, 38);
+                    Cursor.Position = orig;
+                }
+            ),
+
+            // Awesome Game overlay screen
             new ScreenState(
                 new AndCheck(
                     new PixelCheck(new Point(300, 274), new int[] { 112, 31, 197 }),
@@ -107,7 +123,7 @@ namespace BejeweledBlitzEmperor
                 ),
                 delegate()
                 {
-                    // No Thanks button to close Awesome Game popup
+                    // No Thanks button to close Awesome Game overlay
                     Point orig = Cursor.Position;
                     ScreenIO.ClickRelativeToGame(329, 406);
                     Cursor.Position = orig;

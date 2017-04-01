@@ -34,7 +34,7 @@ namespace BejeweledBlitzEmperor
         public override int[] GetPixel(int x, int y)
         {
             int index = GetIndex(x, y);
-            return (new int[] { data[index + 2], data[index + 1], data[index] });
+             return (new int[] { data[index + 2], data[index + 1], data[index] });
         }
 
         public override Color GetColor(int x, int y)
