@@ -167,6 +167,16 @@ namespace BejeweledBlitzEmperor
             return false;
         }
 
+        public int[] GetPixel(Point pt)
+        {
+            return GetPixel(pt.X, pt.Y);
+        }
+
+        public virtual Color GetColor(Point pt)
+        {
+            return GetColor(pt.X, pt.Y);
+        }
+
         public virtual int CountColor(int[] color, int[] threshold)
         {
             int count = 0;

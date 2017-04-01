@@ -61,11 +61,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bots\Bot.cs" />
+    <Compile Include="Bots\DriverBot.cs" />
     <Compile Include="Controls\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameBots\GameBot.cs" />
-    <Compile Include="GameBots\RandomBot.cs" />
+    <Compile Include="Bots\GameBot.cs" />
+    <Compile Include="Bots\RandomBot.cs" />
     <Compile Include="Gem.cs" />
     <Compile Include="GemBoard.cs" />
     <Compile Include="GemParser.cs" />
@@ -73,6 +75,11 @@
     <Compile Include="InputWrapper.cs" />
     <Compile Include="MoveLogic.cs" />
     <Compile Include="ScreenIO.cs" />
+    <Compile Include="ScreenLogic\AndCheck.cs" />
+    <Compile Include="ScreenLogic\IScreenCheck.cs" />
+    <Compile Include="ScreenLogic\OrCheck.cs" />
+    <Compile Include="ScreenLogic\PixelCheck.cs" />
+    <Compile Include="ScreenLogic\ScreenState.cs" />
     <Compile Include="WindowWrapper\WindowWrapper.cs" />
     <Page Include="Controls\InputBox.xaml">
       <SubType>Designer</SubType>

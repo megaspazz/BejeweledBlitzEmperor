@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BejeweledBlitzEmperor"
         mc:Ignorable="d"
         Topmost="True"
-        Title="MainWindow" SizeToContent="Height" Width="250">
+        Title="Bejeweled Blitz Emperor" SizeToContent="Height" Width="250">
     <StackPanel>
         <Button x:Name="btnGetBoard" Content="Get Board" Click="btnGetBoard_Click" />
         <Button x:Name="btnGetBoardFromPause" Content="Get Board (From Pause)" Click="btnGetBoardFromPause_Click" />
@@ -14,10 +14,15 @@
         <Button x:Name="btnRecordSquare" Content="Record Square" Click="btnRecordSquare_Click" />
         <Button x:Name="btnRecordSquareFromPause" Content="Record Square (From Pause)" Click="btnRecordSquareFromPause_Click" />
         <Button x:Name="btnGetMoves" Content="GetMoves" Click="btnGetMoves_Click" />
-        <Button x:Name="btnSimulateOneMove" Content="Simulate One Move" Height="160" Click="btnSimulateOneMove_Click" />
+        <Button x:Name="btnSimulateOneMove" Content="Simulate One Move" Height="80" Click="btnSimulateOneMove_Click" />
         <Button x:Name="btnRunTimedAsync" Content="Run Timed Async" Click="btnRunTimedAsync_Click" />
         <Button x:Name="btnStopAsync" Content="Stop Async" Click="btnStopAsync_Click" />
         <Button x:Name="btnGetHandleAndRect" Content="Get Handle And Rect" Click="btnGetHandleAndRect_Click" />
         <Button x:Name="btnAutoDetectGamePos" Content="Auto Detect Game Position" Click="btnAutoDetectGamePos_Click" />
+        <Button x:Name="btnGetScreenCheck" Content="Get Screen Check" Click="btnGetScreenCheck_Click" />
+        <Button x:Name="btnGetGameScreenPoint" Content="Get Game Screen Point" Click="btnGetGameScreenPoint_Click" />
+        <Button x:Name="btnExecuteAllStatesAsync" Content="Execute All States Async" Click="btnExecuteAllStates_Click" />
+        <Button x:Name="btnRunForeverAsync" Content="Run Forever Async" Height="120" Click="btnRunForeverAsync_Click" />
+        <Button x:Name="btnStopForeverAsync" Content="Stop Forever Async" Height="120" Click="btnStopForeverAsync_Click" />
     </StackPanel>
 </Window>

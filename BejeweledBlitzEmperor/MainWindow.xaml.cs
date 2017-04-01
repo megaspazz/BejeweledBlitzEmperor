@@ -122,7 +122,6 @@ namespace BejeweledBlitzEmperor
                             }
                         }
                     } while (sw.ElapsedMilliseconds < duration);
-                    //bmp.Save(@"box.bmp");
 
                     StringBuilder sb = new StringBuilder();
                     foreach (Signature sig in sigs)
@@ -159,7 +158,6 @@ namespace BejeweledBlitzEmperor
                             }
                         }
                     } while (sw.ElapsedMilliseconds < duration);
-                    //bmp.Save(@"box.bmp");
 
                     ScreenIO.ClickRelativeToBoard(ScreenIO.OFF_MENU);
 
@@ -238,12 +236,60 @@ namespace BejeweledBlitzEmperor
             if (ScreenIO.AutoSetBoardPoint())
             {
                 // Note that even though this may succeed, it may fail if it is able to detect the top corner pixel color somewhere else, like if there was another instance of the game open.
-                MessageBox.Show("The position of the flash game has been properly set.", "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Information);
+                Point pt = ScreenIO.GetGameTopLeft();
+                string msg = string.Format("The position of the flash game has been automatically set at ({0}, {1}).", pt.X, pt.Y);
+                MessageBox.Show(msg, "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
                 MessageBox.Show("Unable to automatically detect the position of the flash game.  Please make sure that the game has fully loaded and that the entire flash game is visible on your screen.", "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void btnGetScreenCheck_Click(object sender, RoutedEventArgs e)
+        {
+            Point tl = ScreenIO.GetGameTopLeft();
+            Point pt = System.Windows.Forms.Cursor.Position;
+            using (Bitmap bmp = ScreenIO.GetGameBitmap())
+            {
+                using (Bitmap24 bmp24 = Bitmap24.FromImage(bmp))
+                {
+                    bmp24.Lock();
+                    int x = pt.X - tl.X;
+                    int y = pt.Y - tl.Y;
+                    int[] px = bmp24.GetPixel(x, y);
+                    Console.WriteLine("new PixelCheck(new Point({0}, {1}), new int[] {{ {2}, {3}, {4} }})", x, y, px[0], px[1], px[2]);
+                }
+            }
+        }
+
+        private void btnGetGameScreenPoint_Click(object sender, RoutedEventArgs e)
+        {
+            Point tl = ScreenIO.GetGameTopLeft();
+            Point pt = System.Windows.Forms.Cursor.Position;
+            MessageBox.Show(string.Format("Relative to top-left of flash game window:\n\n({0}, {1})", pt.X - tl.X, pt.Y - tl.Y), "Game Screen Point");
+        }
+
+        private void btnExecuteAllStates_Click(object sender, RoutedEventArgs e)
+        {
+            ScreenIO.ExecuteAllStatesAsync();
+        }
+
+        private DriverBot _driver = new DriverBot();
+        private void btnRunForeverAsync_Click(object sender, RoutedEventArgs e)
+        {
+            if (_driver.Running)
+            {
+                MessageBox.Show("Error!  The driver is still running.  Please stop it or wait for it to finish.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            _driver.RunTimedAsync(int.MaxValue);
+        }
+
+        private void btnStopForeverAsync_Click(object sender, RoutedEventArgs e)
+        {
+            _driver.StopAsync();
         }
     }
 }

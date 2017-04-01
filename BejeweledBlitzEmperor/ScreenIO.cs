@@ -18,11 +18,134 @@ namespace BejeweledBlitzEmperor
         public static Point OFF_MENU = new Point(-87, 333);
         public static Point OFF_RESUME = new Point(166, 240);
 
+        public static Size SZ_GAME = new Size(760, 611);
+
         public static int BOX_SIZE = 40;
         public static int BOARD_DIM = 8;
 
         public static int[] CLR_WHITE = { 255, 255, 255 };
         public static int[] CLR_FLASH_CORNER = { 57, 21, 80 };
+
+        private static GameBot _bot = new RandomBot();
+        public static ScreenState[] STATES =
+        {
+            // Main screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(107, 113), new int[] { 228, 169, 102 }),
+                    new PixelCheck(new Point(264, 90), new int[] { 14, 89, 239 }),
+                    new PixelCheck(new Point(416, 115), new int[] { 224, 155, 86 })
+                ),
+                delegate()
+                {
+                    // Play Now button 
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(265, 414);
+                    Cursor.Position = orig;
+
+                    // Play a game
+                    //_bot.RunTimed(80000);
+                }
+            ),
+
+            // In-game screen
+            new ScreenState(
+                new OrCheck(
+                    new AndCheck(
+                        new PixelCheck(new Point(37, 108), new int[] { 225, 122, 50 }),
+                        new PixelCheck(new Point(146, 117), new int[] { 249, 142, 62 })
+                    ),
+                    new AndCheck(
+                        new PixelCheck(new Point(54, 390), new int[] { 255, 161, 78 }),
+                        new PixelCheck(new Point(128, 398), new int[] { 255, 161, 80 })
+                    )
+                ),
+                delegate()
+                {
+                    // Make one move
+                    _bot.RunSingle();
+                }
+            ),
+
+            // Rare Gem screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(61, 111), new int[] { 203, 74, 99 }),
+                    new PixelCheck(new Point(277, 143), new int[] { 247, 254, 198 }),
+                    new PixelCheck(new Point(463, 121), new int[] { 222, 149, 45 })
+                ),
+                delegate() {
+                    // No Thanks button
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(203, 442);
+                    Cursor.Position = orig;
+                }
+            ),
+
+            // Friends popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(87, 30), new int[] { 217, 106, 149 }),
+                    new PixelCheck(new Point(378, 9), new int[] { 18, 139, 250 }),
+                    new PixelCheck(new Point(641, 21), new int[] { 222, 149, 45 })
+                ),
+                delegate()
+                {
+                    // X button to close friends popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(677, 35);
+                    Cursor.Position = orig;
+                }
+            ),
+
+            // Awesome Game popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(300, 274), new int[] { 112, 31, 197 }),
+                    new PixelCheck(new Point(329, 275), new int[] { 206, 116, 235 }),
+                    new PixelCheck(new Point(384, 233), new int[] { 151, 10, 219 })
+                ),
+                delegate()
+                {
+                    // No Thanks button to close Awesome Game popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(329, 406);
+                    Cursor.Position = orig;
+                }
+            ),
+
+            // End game screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(29, 94), new int[] { 255, 253, 137 }),
+                    new PixelCheck(new Point(257, 83), new int[] { 0, 219, 250 }),
+                    new PixelCheck(new Point(501, 95), new int[] { 204, 108, 1 })
+                ),
+                delegate()
+                {
+                    // X button to close friends popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(264, 531);
+                    Cursor.Position = orig;
+                }
+            ),
+            
+            // New Rank popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(212, 123), new int[] { 116, 37, 61 }),
+                    new PixelCheck(new Point(378, 114), new int[] { 207, 147, 64 }),
+                    new PixelCheck(new Point(551, 123), new int[] { 236, 163, 56 })
+                ),
+                delegate()
+                {
+                    // Continue button to close New Rank popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(457, 414);
+                    Cursor.Position = orig;
+                }
+            ),
+        };
 
         // Measured from center, which is rounded up for even number box size.
         // In the diagram below, the x's are potential centers, and the o is the actual center
@@ -76,7 +199,14 @@ namespace BejeweledBlitzEmperor
 
         public static Bitmap GetBoardBitmap()
         {
-            return WindowWrapper.ScreenCapture(GetBoardRectangle());
+            while (true)
+            {
+                Bitmap bmp = WindowWrapper.ScreenCapture(GetBoardRectangle());
+                if (bmp != null)
+                {
+                    return bmp;
+                }
+            }
         }
 
         public static Bitmap GetBoxBitmap(int gridX, int gridY)
@@ -92,9 +222,6 @@ namespace BejeweledBlitzEmperor
             {
                 int[] px = bmp24.GetPixel((gridX * BOX_SIZE) + (BOX_SIZE / 2) + offset.X, (gridY * BOX_SIZE) + (BOX_SIZE / 2) + offset.Y);
                 return Signature.RGBToInt(px);
-
-                // WTF GG I GOT THIS WRONG THE WHOLE TIME!
-                //return (px[0] << 16) | (px[1] << 8) | px[0];
             }).ToArray();
 
             return new Signature(sig);
@@ -128,6 +255,17 @@ namespace BejeweledBlitzEmperor
         public static void ClickRelativeToBoard(int x, int y)
         {
             InputWrapper.LeftClick(PT_BOARD.X + x, PT_BOARD.Y + y);
+        }
+
+        public static void ClickRelativeToGame(Point pt)
+        {
+            ClickRelativeToBoard(pt.X, pt.Y);
+        }
+
+        public static void ClickRelativeToGame(int x, int y)
+        {
+            Point tl = GetGameTopLeft();
+            InputWrapper.LeftClick(tl.X + x, tl.Y + y);
         }
 
         public static void MakeMove(Move mv)
@@ -175,6 +313,67 @@ namespace BejeweledBlitzEmperor
 
             PT_BOARD = new Point(pt.X + OFF_BOARD.X, pt.Y + OFF_BOARD.Y);
             return true;
+        }
+
+        public static Point GetGameTopLeft()
+        {
+            return new Point(PT_BOARD.X - OFF_BOARD.X, PT_BOARD.Y - OFF_BOARD.Y);
+        }
+
+        public static Rectangle GetGameRect()
+        {
+            return new Rectangle(GetGameTopLeft(), SZ_GAME);
+        }
+
+        public static Bitmap GetGameBitmap()
+        {
+            while (true)
+            {
+                Bitmap bmp = WindowWrapper.ScreenCapture(GetGameRect());
+                if (bmp != null)
+                {
+                    return bmp;
+                }
+            }
+        }
+
+        public static void ExecuteAllStatesAsync()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                ExecuteAllStates();
+            });
+        }
+
+        public static void ExecuteAllStates()
+        {
+            using (Bitmap bmp = ScreenIO.GetGameBitmap())
+            {
+                using (Bitmap24 bmp24 = Bitmap24.FromImage(bmp))
+                {
+                    bmp24.Lock();
+                    foreach (ScreenState ss in STATES)
+                    {
+                        ss.Execute(bmp24);
+                    }
+                }
+            }
+        }
+
+        public static void ExecuteAllStatesForever()
+        {
+            while (true)
+            {
+                ExecuteAllStates();
+            }
+        }
+
+        public static void ExecuteAllStatesForeverAsync()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                ExecuteAllStatesForever();
+            });
         }
     }
 
