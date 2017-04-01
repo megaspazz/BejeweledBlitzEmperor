@@ -293,7 +293,7 @@ namespace BejeweledBlitzEmperor
                                 int[] pxRB = bmp24.GetPixel(x, y);
                                 if (Bitmap24.PixelEqual(pxLT, CLR_WHITE) && Bitmap24.PixelEqual(pxRT, CLR_WHITE) && Bitmap24.PixelEqual(pxLB, CLR_WHITE) && Bitmap24.PixelEqual(pxRB, CLR_FLASH_CORNER))
                                 {
-                                    return new Point(x, y);
+                                    return new Point(bounds.X + x, bounds.Y + y);
                                 }
                             }
                         }
