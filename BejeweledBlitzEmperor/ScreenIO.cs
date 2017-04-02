@@ -122,6 +122,28 @@ namespace BejeweledBlitzEmperor
                     Thread.Sleep(2500);
                 }
             ),
+            
+            /* This may or may not be necessary */
+
+            //// Awesome Game overlay screen
+            //// Should be before the Main Game screen in the state order
+            //new ScreenState(
+            //    new AndCheck(
+            //        new PixelCheck(new Point(343, 225), new int[] { 57, 7, 173 }),
+            //        new PixelCheck(new Point(342, 245), new int[] { 4, 31, 0 }),
+            //        new PixelCheck(new Point(333, 295), new int[] { 255, 36, 110 })
+            //    ),
+            //    delegate()
+            //    {
+            //        // No Thanks button to close Awesome Game overlay
+            //        // May require delays to close the popup properly
+            //        Thread.Sleep(2500);
+            //        Point orig = Cursor.Position;
+            //        ScreenIO.ClickRelativeToGame(329, 406);
+            //        Cursor.Position = orig;
+            //        Thread.Sleep(2500);
+            //    }
+            //),
 
             // Rare Gem screen
             new ScreenState(
