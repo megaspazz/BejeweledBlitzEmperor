@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BejeweledBlitzEmperor
 {
-    class DriverBot : Bot
+    class AllStatesDriverBot : Bot
     {
         public override void RunSingle()
         {

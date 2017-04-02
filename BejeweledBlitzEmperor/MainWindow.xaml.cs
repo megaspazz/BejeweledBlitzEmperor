@@ -275,7 +275,7 @@ namespace BejeweledBlitzEmperor
             ScreenIO.ExecuteAllStatesAsync();
         }
 
-        private DriverBot _driver = new DriverBot();
+        private Bot _driver = new FirstStateDriverBot();
         private void btnRunForeverAsync_Click(object sender, RoutedEventArgs e)
         {
             if (_driver.Running)

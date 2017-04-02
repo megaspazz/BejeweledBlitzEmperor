@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,25 +27,60 @@ namespace BejeweledBlitzEmperor
         public static int[] CLR_WHITE = { 255, 255, 255 };
         public static int[] CLR_FLASH_CORNER = { 57, 21, 80 };
 
+        // The type of Bot to use for the game itself
         private static GameBot _bot = new RandomBot();
-        public static ScreenState[] STATES =
+
+        // States in order of execution
+        private static ScreenState[] sTATES =
         {
-            // Main screen
+            // Message Center popup screen
             new ScreenState(
                 new AndCheck(
-                    new PixelCheck(new Point(107, 113), new int[] { 228, 169, 102 }),
-                    new PixelCheck(new Point(264, 90), new int[] { 14, 89, 239 }),
-                    new PixelCheck(new Point(416, 115), new int[] { 224, 155, 86 })
+                    new PixelCheck(new Point(67, 40), new int[] { 222, 149, 45 }),
+                    new PixelCheck(new Point(360, 27), new int[] { 168, 12, 78 }),
+                    new PixelCheck(new Point(720, 29), new int[] { 141, 50, 71 })
                 ),
                 delegate()
                 {
-                    // Play Now button 
+                    // X button to close Message Center popup
+                    // May require a small pause before and after
+                    Thread.Sleep(500);
                     Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(265, 414);
+                    ScreenIO.ClickRelativeToGame(678, 38);
                     Cursor.Position = orig;
+                    Thread.Sleep(500);
+                }
+            ),
 
-                    // Play a game
-                    //_bot.RunTimed(80000);
+            // Friends popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(87, 30), new int[] { 217, 106, 149 }),
+                    new PixelCheck(new Point(378, 9), new int[] { 18, 139, 250 }),
+                    new PixelCheck(new Point(641, 21), new int[] { 222, 149, 45 })
+                ),
+                delegate()
+                {
+                    // X button to close Friends popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(677, 35);
+                    Cursor.Position = orig;
+                }
+            ),
+            
+            // New Rank popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(212, 123), new int[] { 116, 37, 61 }),
+                    new PixelCheck(new Point(378, 114), new int[] { 207, 147, 64 }),
+                    new PixelCheck(new Point(551, 123), new int[] { 236, 163, 56 })
+                ),
+                delegate()
+                {
+                    // Continue button to close New Rank popup
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(457, 414);
+                    Cursor.Position = orig;
                 }
             ),
 
@@ -67,6 +103,26 @@ namespace BejeweledBlitzEmperor
                 }
             ),
 
+            // Awesome Game overlay screen
+            // Should be before the Main Game screen in the state order
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(300, 274), new int[] { 112, 31, 197 }),
+                    new PixelCheck(new Point(329, 275), new int[] { 206, 116, 235 }),
+                    new PixelCheck(new Point(384, 233), new int[] { 151, 10, 219 })
+                ),
+                delegate()
+                {
+                    // No Thanks button to close Awesome Game overlay
+                    // May require delays to close the popup properly
+                    Thread.Sleep(2500);
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(329, 406);
+                    Cursor.Position = orig;
+                    Thread.Sleep(2500);
+                }
+            ),
+
             // Rare Gem screen
             new ScreenState(
                 new AndCheck(
@@ -78,54 +134,6 @@ namespace BejeweledBlitzEmperor
                     // No Thanks button
                     Point orig = Cursor.Position;
                     ScreenIO.ClickRelativeToGame(203, 442);
-                    Cursor.Position = orig;
-                }
-            ),
-
-            // Friends popup screen
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(87, 30), new int[] { 217, 106, 149 }),
-                    new PixelCheck(new Point(378, 9), new int[] { 18, 139, 250 }),
-                    new PixelCheck(new Point(641, 21), new int[] { 222, 149, 45 })
-                ),
-                delegate()
-                {
-                    // X button to close Friends popup
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(677, 35);
-                    Cursor.Position = orig;
-                }
-            ),
-
-            // Message Center popup screen
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(67, 40), new int[] { 222, 149, 45 }),
-                    new PixelCheck(new Point(360, 27), new int[] { 168, 12, 78 }),
-                    new PixelCheck(new Point(720, 29), new int[] { 141, 50, 71 })
-                ),
-                delegate()
-                {
-                    // X button to close Message Center popup
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(678, 38);
-                    Cursor.Position = orig;
-                }
-            ),
-
-            // Awesome Game overlay screen
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(300, 274), new int[] { 112, 31, 197 }),
-                    new PixelCheck(new Point(329, 275), new int[] { 206, 116, 235 }),
-                    new PixelCheck(new Point(384, 233), new int[] { 151, 10, 219 })
-                ),
-                delegate()
-                {
-                    // No Thanks button to close Awesome Game overlay
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(329, 406);
                     Cursor.Position = orig;
                 }
             ),
@@ -145,20 +153,23 @@ namespace BejeweledBlitzEmperor
                     Cursor.Position = orig;
                 }
             ),
-            
-            // New Rank popup screen
+
+            // Main screen
             new ScreenState(
                 new AndCheck(
-                    new PixelCheck(new Point(212, 123), new int[] { 116, 37, 61 }),
-                    new PixelCheck(new Point(378, 114), new int[] { 207, 147, 64 }),
-                    new PixelCheck(new Point(551, 123), new int[] { 236, 163, 56 })
+                    new PixelCheck(new Point(107, 113), new int[] { 228, 169, 102 }),
+                    new PixelCheck(new Point(264, 90), new int[] { 14, 89, 239 }),
+                    new PixelCheck(new Point(416, 115), new int[] { 224, 155, 86 })
                 ),
                 delegate()
                 {
-                    // Continue button to close New Rank popup
+                    // Play Now button 
                     Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(457, 414);
+                    ScreenIO.ClickRelativeToGame(265, 414);
                     Cursor.Position = orig;
+
+                    // Play a game
+                    //_bot.RunTimed(80000);
                 }
             ),
         };
@@ -182,6 +193,19 @@ namespace BejeweledBlitzEmperor
             new Point(-1, 0),
             new Point(0, 0),
         };
+
+        internal static ScreenState[] STATES
+        {
+            get
+            {
+                return sTATES;
+            }
+
+            set
+            {
+                sTATES = value;
+            }
+        }
 
         public static Rectangle GetBoardRectangle()
         {
@@ -389,6 +413,40 @@ namespace BejeweledBlitzEmperor
             Task.Factory.StartNew(() =>
             {
                 ExecuteAllStatesForever();
+            });
+        }
+
+        public static void ExecuteFirstState()
+        {
+            using (Bitmap bmp = ScreenIO.GetGameBitmap())
+            {
+                using (Bitmap24 bmp24 = Bitmap24.FromImage(bmp))
+                {
+                    bmp24.Lock();
+                    foreach (ScreenState ss in STATES)
+                    {
+                        if (ss.Execute(bmp24))
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void ExecuteFirstStateForever()
+        {
+            while (true)
+            {
+                ExecuteFirstState();
+            }
+        }
+
+        public static void ExecuteFirstStateForeverAsync()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                ExecuteFirstStateForever();
             });
         }
     }

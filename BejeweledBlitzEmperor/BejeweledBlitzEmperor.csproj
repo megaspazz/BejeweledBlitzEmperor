@@ -62,7 +62,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bots\Bot.cs" />
-    <Compile Include="Bots\DriverBot.cs" />
+    <Compile Include="Bots\AllStatesDriverBot.cs" />
+    <Compile Include="Bots\FirstStateDriverBot.cs" />
     <Compile Include="Controls\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
