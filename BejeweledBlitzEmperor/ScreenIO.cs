@@ -52,12 +52,31 @@ namespace BejeweledBlitzEmperor
                 }
             ),
 
+            // Illuminite popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(320, 205), new int[] { 237, 43, 55 }),
+                    new PixelCheck(new Point(333, 242), new int[] { 253, 0, 0 }),
+                    new PixelCheck(new Point(322, 305), new int[] { 255, 0, 4 })
+                ),
+                delegate()
+                {
+                    // X button to close Message Center popup
+                    // Not sure if sleep is required, but added to be safe
+                    Thread.Sleep(500);
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(671, 59);
+                    Cursor.Position = orig;
+                    Thread.Sleep(500);
+                }
+            ),
+
             // Progressive Ad popup screen
             new ScreenState(
                 new AndCheck(
-                    new PixelCheck(new Point(325, 271), new int[] { 253, 201, 246 }),
-                    new PixelCheck(new Point(328, 313), new int[] { 146, 18, 182 }),
-                    new PixelCheck(new Point(305, 329), new int[] { 254, 50, 191 })
+                    new PixelCheck(new Point(193, 608), new int[] { 101, 46, 56 }),
+                    new PixelCheck(new Point(199, 272), new int[] { 61, 29, 30 }),
+                    new PixelCheck(new Point(220, 308), new int[] { 250, 44, 58 })
                 ),
                 delegate()
                 {
@@ -106,27 +125,8 @@ namespace BejeweledBlitzEmperor
                 }
             ),
 
-            // In-game screen
-            new ScreenState(
-                new OrCheck(
-                    new AndCheck(
-                        new PixelCheck(new Point(37, 108), new int[] { 225, 122, 50 }),
-                        new PixelCheck(new Point(146, 117), new int[] { 249, 142, 62 })
-                    ),
-                    new AndCheck(
-                        new PixelCheck(new Point(54, 390), new int[] { 255, 161, 78 }),
-                        new PixelCheck(new Point(128, 398), new int[] { 255, 161, 80 })
-                    )
-                ),
-                delegate()
-                {
-                    // Make one move
-                    _bot.RunSingle();
-                }
-            ),
-
             // Awesome Game overlay screen
-            // Should be before the Main Game screen in the state order
+            // Should be before the In-game screen in the state order
             new ScreenState(
                 new AndCheck(
                     new PixelCheck(new Point(300, 274), new int[] { 112, 31, 197 }),
@@ -144,28 +144,6 @@ namespace BejeweledBlitzEmperor
                     Thread.Sleep(2500);
                 }
             ),
-            
-            /* This may or may not be necessary */
-
-            //// Awesome Game overlay screen
-            //// Should be before the Main Game screen in the state order
-            //new ScreenState(
-            //    new AndCheck(
-            //        new PixelCheck(new Point(343, 225), new int[] { 57, 7, 173 }),
-            //        new PixelCheck(new Point(342, 245), new int[] { 4, 31, 0 }),
-            //        new PixelCheck(new Point(333, 295), new int[] { 255, 36, 110 })
-            //    ),
-            //    delegate()
-            //    {
-            //        // No Thanks button to close Awesome Game overlay
-            //        // May require delays to close the popup properly
-            //        Thread.Sleep(2500);
-            //        Point orig = Cursor.Position;
-            //        ScreenIO.ClickRelativeToGame(329, 406);
-            //        Cursor.Position = orig;
-            //        Thread.Sleep(2500);
-            //    }
-            //),
 
             // Rare Gem screen
             new ScreenState(
@@ -214,6 +192,26 @@ namespace BejeweledBlitzEmperor
 
                     // Play a game
                     //_bot.RunTimed(80000);
+                }
+            ),
+
+            // In-game screen
+            // Should be after the Awesome Game popup screen in the state order
+            new ScreenState(
+                new OrCheck(
+                    new AndCheck(
+                        new PixelCheck(new Point(37, 108), new int[] { 225, 122, 50 }),
+                        new PixelCheck(new Point(146, 117), new int[] { 249, 142, 62 })
+                    ),
+                    new AndCheck(
+                        new PixelCheck(new Point(54, 390), new int[] { 255, 161, 78 }),
+                        new PixelCheck(new Point(128, 398), new int[] { 255, 161, 80 })
+                    )
+                ),
+                delegate()
+                {
+                    // Make one move
+                    _bot.RunSingle();
                 }
             ),
         };
