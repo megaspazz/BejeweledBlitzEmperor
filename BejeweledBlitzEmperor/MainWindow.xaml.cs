@@ -263,6 +263,40 @@ namespace BejeweledBlitzEmperor
             }
         }
 
+        private void btnGetScreenCheckImage_Click(object sender, RoutedEventArgs e)
+        {
+            string[] result = InputBox.Show("image file name", "top left X", "top left Y", "point X", "point Y");
+            if (result == null)
+            {
+                return;
+            }
+
+            if (!File.Exists(result[0]))
+            {
+                MessageBox.Show("Specified image file does not exist.", "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            int tlX, tlY, ptX, ptY;
+            if (!int.TryParse(result[1], out tlX) || !int.TryParse(result[2], out tlY) || !int.TryParse(result[3], out ptX) || !int.TryParse(result[4], out ptY))
+            {
+                MessageBox.Show("Error parsing coordinates!", "Auto Detect", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            using (Bitmap bmp = new Bitmap(result[0]))
+            {
+                using (Bitmap24 bmp24 = Bitmap24.FromImage(bmp))
+                {
+                    bmp24.Lock();
+                    int x = ptX - tlX;
+                    int y = ptY - tlY;
+                    int[] px = bmp24.GetPixel(ptX, ptY);
+                    Console.WriteLine("new PixelCheck(new Point({0}, {1}), new int[] {{ {2}, {3}, {4} }})", x, y, px[0], px[1], px[2]);
+                }
+            }
+        }
+
         private void btnGetGameScreenPoint_Click(object sender, RoutedEventArgs e)
         {
             Point tl = ScreenIO.GetGameTopLeft();

@@ -20,6 +20,7 @@
         <Button x:Name="btnGetHandleAndRect" Content="Get Handle And Rect" Click="btnGetHandleAndRect_Click" />
         <Button x:Name="btnAutoDetectGamePos" Content="Auto Detect Game Position" Height="100" Click="btnAutoDetectGamePos_Click" />
         <Button x:Name="btnGetScreenCheck" Content="Get Screen Check" Click="btnGetScreenCheck_Click" />
+        <Button x:Name="btnGetScreenCheckImage" Content="Get Screen Check From Image" Click="btnGetScreenCheckImage_Click" />
         <Button x:Name="btnGetGameScreenPoint" Content="Get Game Screen Point" Click="btnGetGameScreenPoint_Click" />
         <Button x:Name="btnExecuteAllStatesAsync" Content="Execute All States Async" Click="btnExecuteAllStates_Click" />
         <Button x:Name="btnRunForeverAsync" Content="Run Forever Async" Height="120" Click="btnRunForeverAsync_Click" />

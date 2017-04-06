@@ -52,6 +52,25 @@ namespace BejeweledBlitzEmperor
                 }
             ),
 
+            // Progressive Ad popup screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(325, 271), new int[] { 253, 201, 246 }),
+                    new PixelCheck(new Point(328, 313), new int[] { 146, 18, 182 }),
+                    new PixelCheck(new Point(305, 329), new int[] { 254, 50, 191 })
+                ),
+                delegate()
+                {
+                    // X button to close Message Center popup
+                    // Not sure if sleep is required, but added to be safe
+                    Thread.Sleep(500);
+                    Point orig = Cursor.Position;
+                    ScreenIO.ClickRelativeToGame(673, 58);
+                    Cursor.Position = orig;
+                    Thread.Sleep(500);
+                }
+            ),
+
             // Friends popup screen
             new ScreenState(
                 new AndCheck(
@@ -62,9 +81,12 @@ namespace BejeweledBlitzEmperor
                 delegate()
                 {
                     // X button to close Friends popup
+                    // Sleep is probably not required, but added to be safe
+                    Thread.Sleep(500);
                     Point orig = Cursor.Position;
                     ScreenIO.ClickRelativeToGame(677, 35);
                     Cursor.Position = orig;
+                    Thread.Sleep(500);
                 }
             ),
             
