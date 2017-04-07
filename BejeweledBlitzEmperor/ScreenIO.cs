@@ -74,9 +74,9 @@ namespace BejeweledBlitzEmperor
             // Progressive Ad popup screen
             new ScreenState(
                 new AndCheck(
-                    new PixelCheck(new Point(193, 608), new int[] { 101, 46, 56 }),
-                    new PixelCheck(new Point(199, 272), new int[] { 61, 29, 30 }),
-                    new PixelCheck(new Point(220, 308), new int[] { 250, 44, 58 })
+                    new PixelCheck(new Point(235, 139), new int[] { 255, 232, 72 }),
+                    new PixelCheck(new Point(338, 147), new int[] { 255, 227, 78 }),
+                    new PixelCheck(new Point(433, 141), new int[] { 255, 238, 65 })
                 ),
                 delegate()
                 {

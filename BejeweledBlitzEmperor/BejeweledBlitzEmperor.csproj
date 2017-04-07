@@ -78,6 +78,7 @@
     <Compile Include="ScreenIO.cs" />
     <Compile Include="ScreenLogic\AndCheck.cs" />
     <Compile Include="ScreenLogic\IScreenCheck.cs" />
+    <Compile Include="ScreenLogic\NotCheck.cs" />
     <Compile Include="ScreenLogic\OrCheck.cs" />
     <Compile Include="ScreenLogic\PixelCheck.cs" />
     <Compile Include="ScreenLogic\ScreenState.cs" />
