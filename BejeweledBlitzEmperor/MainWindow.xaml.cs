@@ -48,7 +48,7 @@ namespace BejeweledBlitzEmperor
 
         private void btnGetBoardFromPause_Click(object sender, RoutedEventArgs e)
         {
-            ScreenIO.ClickRelativeToBoard(ScreenIO.OFF_RESUME);
+            ScreenIO.ClickRelativeToGame(ScreenIO.OFF_RESUME);
             Thread.Sleep(500);
 
             Bitmap bmp = ScreenIO.GetBoardBitmap();
@@ -56,9 +56,9 @@ namespace BejeweledBlitzEmperor
 
             GemBoard board = ScreenIO.GetBoard();
 
-            ScreenIO.ClickRelativeToBoard(ScreenIO.OFF_MENU);
+            ScreenIO.ClickRelativeToGame(ScreenIO.OFF_PAUSE);
 
-            Process.Start(@"board.bmp");
+            Process.Start(@"mspaint.exe", @"board.bmp");
         }
         
         private void btnSpeedTest_Click(object sender, RoutedEventArgs e)
@@ -141,7 +141,7 @@ namespace BejeweledBlitzEmperor
                 int gridX, gridY, duration;
                 if (int.TryParse(result[0], out gridX) && int.TryParse(result[1], out gridY))
                 {
-                    ScreenIO.ClickRelativeToBoard(ScreenIO.OFF_RESUME);
+                    ScreenIO.ClickRelativeToGame(ScreenIO.OFF_RESUME);
                     Thread.Sleep(500);
 
                     int.TryParse(result[2], out duration);
@@ -159,7 +159,7 @@ namespace BejeweledBlitzEmperor
                         }
                     } while (sw.ElapsedMilliseconds < duration);
 
-                    ScreenIO.ClickRelativeToBoard(ScreenIO.OFF_MENU);
+                    ScreenIO.ClickRelativeToGame(ScreenIO.OFF_PAUSE);
 
                     StringBuilder sb = new StringBuilder();
                     foreach (Signature sig in sigs)
@@ -169,6 +169,28 @@ namespace BejeweledBlitzEmperor
                     Console.Write(sb.ToString());
                     File.WriteAllText(@"record.txt", sb.ToString());
                     Process.Start(@"record.txt");
+                }
+            }
+        }
+
+        private void btnGuessSquareFromPause_Click(object sender, RoutedEventArgs e)
+        {
+            string[] result = InputBox.Show("gridX", "gridY");
+            if (result != null)
+            {
+                int gridX, gridY;
+                if (int.TryParse(result[0], out gridX) && int.TryParse(result[1], out gridY))
+                {
+                    ScreenIO.ClickRelativeToGame(ScreenIO.OFF_RESUME);
+                    Thread.Sleep(500);
+
+                    GemBoard gems = ScreenIO.GetBoard();
+                    GemColor g = gems.GetColor(gridX, gridY);
+
+                    Console.WriteLine("Guessed color: {0}", g.ToString());
+
+                    Thread.Sleep(500);
+                    ScreenIO.ClickRelativeToGame(ScreenIO.OFF_PAUSE);
                 }
             }
         }
@@ -292,7 +314,7 @@ namespace BejeweledBlitzEmperor
                     int x = ptX - tlX;
                     int y = ptY - tlY;
                     int[] px = bmp24.GetPixel(ptX, ptY);
-                    Console.WriteLine("new PixelCheck(new Point({0}, {1}), new int[] {{ {2}, {3}, {4} }})", x, y, px[0], px[1], px[2]);
+                    Console.WriteLine("new PixelCheck(new Point({0}, {1}), new int[] {{ {2}, {3}, {4} }}),", x, y, px[0], px[1], px[2]);
                 }
             }
         }
@@ -301,7 +323,13 @@ namespace BejeweledBlitzEmperor
         {
             Point tl = ScreenIO.GetGameTopLeft();
             Point pt = System.Windows.Forms.Cursor.Position;
-            MessageBox.Show(string.Format("Relative to top-left of flash game window:\n\n({0}, {1})", pt.X - tl.X, pt.Y - tl.Y), "Game Screen Point");
+            System.Drawing.Color c;
+            using (Bitmap bmp = WindowWrapper.ScreenCapture(new Rectangle(pt.X, pt.Y, 1, 1)))
+            {
+                c = bmp.GetPixel(0, 0);
+            }
+            Console.WriteLine("new PixelCheck(new Point({0}, {1}), new int[] {{ {2}, {3}, {4} }}),", pt.X - tl.X, pt.Y - tl.Y, c.R, c.G, c.B);
+            MessageBox.Show(string.Format("Relative to top-left of flash game window:\n\nPoint: ({0}, {1})\nColor: ({2}, {3}, {4})", pt.X - tl.X, pt.Y - tl.Y, c.R, c.G, c.B), "Game Screen Point");
         }
 
         private void btnExecuteAllStates_Click(object sender, RoutedEventArgs e)
@@ -324,6 +352,102 @@ namespace BejeweledBlitzEmperor
         private void btnStopForeverAsync_Click(object sender, RoutedEventArgs e)
         {
             _driver.StopAsync();
+        }
+
+        private static string GenerateSignatureCode(HashSet<Signature> sigs, string gemColor, string gemType)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (Signature sig in sigs)
+            {
+                sb.AppendFormat("AddSignature(new int[] {{ {0} }}, GemColor.{1}, GemType.{2});\r\n", string.Join(", ", sig.Sig), gemColor, gemType);
+            }
+            return sb.ToString();
+        }
+
+        private void btnCheckForUnknownGems_Click(object sender, RoutedEventArgs e)
+        {
+            Bitmap boardBmp = ScreenIO.GetBoardBitmap();
+            boardBmp.Save(@"board.bmp");
+
+            GemBoard board = ScreenIO.GetBoard();
+
+            HashSet<Signature>[,] sigs = new HashSet<Signature>[board.XMax, board.YMax];
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            bool diffs = false;
+            do
+            {
+                using (Bitmap bmp = ScreenIO.GetBoardBitmap())
+                {
+                    using (Bitmap24 bmp24 = Bitmap24.FromImage(bmp))
+                    {
+                        for (int x = 0; x < board.XMax; ++x)
+                        {
+                            for (int y = 0; y < board.YMax; ++y)
+                            {
+                                Signature sig = ScreenIO.GetSignature(bmp24, x, y);
+                                Gem g = GemParser.Get(sig);
+                                if (g.Color != GemColor.None)
+                                {
+                                    continue;
+                                }
+                                diffs = true;
+                                if (sigs[x, y] == null)
+                                {
+                                    sigs[x, y] = new HashSet<Signature>();
+                                }
+                                sigs[x, y].Add(ScreenIO.GetSignature(bmp24, x, y));
+                            }
+                        }
+                    }
+                    if (!diffs)
+                    {
+                        break;
+                    }
+                }
+            } while (sw.ElapsedMilliseconds < 1600);
+
+            if (!diffs)
+            {
+                ScreenIO.ExecuteAllStatesAsync();
+                return;
+            }
+
+            ScreenIO.ClickRelativeToGame(ScreenIO.OFF_PAUSE);
+
+            Process.Start(@"mspaint.exe", @"board.bmp");
+
+            List<string> files = new List<string>();
+            for (int x = 0; x < board.XMax; ++x)
+            {
+                for (int y = 0; y < board.YMax; ++y)
+                {
+                    if (sigs[x, y] == null)
+                    {
+                        continue;
+                    }
+
+                    string[] result = InputBox.Show(string.Format("gem at (x = {0}, y = {1})\n\ngem color", x, y), "gem type");
+                    if (result == null)
+                    {
+                        continue;
+                    }
+
+                    string gemColor = result[0];
+                    string gemType = result[1];
+
+                    string filename = string.Format("signature-x{0}-y{1}-{2}-{3}.txt", x, y, gemColor.ToLower(), gemType.ToLower());
+                    string outputCode = GenerateSignatureCode(sigs[x, y], gemColor, gemType);
+
+                    File.WriteAllText(filename, outputCode);
+
+                    files.Add(filename);
+                }
+            }
+
+            foreach (string file in files) {
+                Process.Start(file);
+            }
         }
     }
 }

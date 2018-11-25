@@ -13,26 +13,211 @@ namespace BejeweledBlitzEmperor
     {
         // Top-left corner of the game area
         // Hard-coded for Chrome browser in Windows 10 OS
-        public static Point PT_BOARD = new Point(522, 348);
-        public static Point OFF_BOARD = new Point(175, 109);
+        public static Point PT_BOARD = new Point(-1695, 294);
+        public static Point OFF_BOARD = new Point(308, 150);
 
-        public static Point OFF_MENU = new Point(-87, 333);
-        public static Point OFF_RESUME = new Point(166, 240);
+        public static Point OFF_PAUSE = new Point(922, 72);
+        public static Point OFF_RESUME = new Point(483, 463);
 
-        public static Size SZ_GAME = new Size(760, 611);
+        public static Size SZ_GAME = new Size(960, 640);
 
         public static int BOX_SIZE = 40;
         public static int BOARD_DIM = 8;
 
         public static int[] CLR_WHITE = { 255, 255, 255 };
-        public static int[] CLR_FLASH_CORNER = { 57, 21, 80 };
+        public static int[] CLR_FLASH_CORNER = { 50, 0, 77 };
 
         // The type of Bot to use for the game itself
         private static GameBot _bot = new RandomBot();
 
         // States in order of execution
-        private static ScreenState[] sTATES =
+        private static ScreenState[] _STATES =
         {
+            // New Rank screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(303, 135), new int[] { 42, 116, 201 }),
+                    new PixelCheck(new Point(647, 135), new int[] { 42, 24, 67 }),
+                    new PixelCheck(new Point(657, 138), new int[] { 46, 123, 212 })
+                ),
+                delegate()
+                {
+                    // Continue button
+                    ScreenIO.ReturnClickRelativeToGame(594, 431);
+                }
+            ),
+
+            // Gem Explorers screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(297, 15), new int[] { 255, 255, 255 }),
+                    new PixelCheck(new Point(448, 30), new int[] { 30, 199, 246 }),
+                    new PixelCheck(new Point(681, 26), new int[] { 1, 101, 171 })
+                ),
+                delegate()
+                {
+                    // Back button
+                    ScreenIO.ReturnClickRelativeToGame(339, 595);
+                }
+            ),
+            
+            // Events screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(431, 55), new int[] { 229, 140, 31 }),
+                    new PixelCheck(new Point(545, 60), new int[] { 206, 118, 7 }),
+                    new PixelCheck(new Point(479, 22), new int[] { 38, 6, 57 }),
+                    new PixelCheck(new Point(467, 60), new int[] { 78, 12, 116 })
+                ),
+                delegate()
+                {
+                    // Back button
+                    ScreenIO.ReturnClickRelativeToGame(675, 14);
+                }
+            ),
+
+            // Bring Back the Competition screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(173, 69), new int[] { 255, 249, 87 }),
+                    new PixelCheck(new Point(176, 72), new int[] { 214, 215, 231 }),
+                    new PixelCheck(new Point(785, 513), new int[] { 92, 92, 168 }),
+                    new PixelCheck(new Point(787, 518), new int[] { 192, 145, 31 })
+                ),
+                delegate()
+                {
+                    // Back button
+                    ScreenIO.ReturnClickRelativeToGame(780, 67);
+                }
+            ),
+
+            // Blitz Champions screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(184, 131), new int[] { 223, 176, 251 }),
+                    new PixelCheck(new Point(417, 109), new int[] { 218, 113, 0 }),
+                    new PixelCheck(new Point(792, 169), new int[] { 189, 30, 183 })
+                ),
+                delegate()
+                {
+                    // Leaderboard button
+                    ScreenIO.ReturnClickRelativeToGame(314, 625);
+                }
+            ),
+
+            // Weekly Leaderboard screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(215, 113), new int[] { 255, 255, 86 }),
+                    new PixelCheck(new Point(511, 92), new int[] { 216, 114, 0 }),
+                    new PixelCheck(new Point(748, 162), new int[] { 229, 46, 223 })
+                ),
+                delegate()
+                {
+                    // Play button
+                    ScreenIO.ReturnClickRelativeToGame(474, 502);
+                }
+            ),
+
+            // Rare Gem screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(254, 116), new int[] { 241, 238, 255}),
+                    new PixelCheck(new Point(708, 533), new int[] { 44, 7, 98})
+                ),
+                delegate() {
+                    // No Thanks button
+                    ScreenIO.ReturnClickRelativeToGame(392, 495);
+                }
+            ),
+
+            // End game screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(294, 245), new int[] { 253, 247, 253}),
+                    new PixelCheck(new Point(640, 585), new int[] { 140, 82, 145 })
+                ),
+                delegate()
+                {
+                    // Play Again button
+                    ScreenIO.ReturnClickRelativeToGame(471, 581);
+                    Thread.Sleep(1000);
+                }
+            ),
+
+            // Main screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(257, 113), new int[] { 164, 121, 101 }),
+                    new PixelCheck(new Point(703, 490), new int[] { 248, 221, 22 })
+                ),
+                delegate()
+                {
+                    // Play Now button 
+                    ScreenIO.ReturnClickRelativeToGame(471, 512);
+
+                    // Play a game
+                    //_bot.RunTimed(80000);
+                }
+            ),
+
+            // Game Paused screen
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(229, 78), new int[] { 241, 238, 255 }),
+                    new PixelCheck(new Point(471, 123), new int[] { 22, 240, 244 }),
+                    new PixelCheck(new Point(720, 123), new int[] { 52, 71, 119 })
+                ),
+                delegate()
+                {
+                    // Resume button 
+                    ScreenIO.ReturnClickRelativeToGame(ScreenIO.OFF_RESUME);
+                }
+            ),
+
+            // Awesome Game overlay screen
+            // Should be before the In-game screen in the state order
+            new ScreenState(
+                new AndCheck(
+                    new PixelCheck(new Point(524, 219), new int[] { 144, 10, 213 }),
+                    new PixelCheck(new Point(483, 233), new int[] { 4, 31, 0 }),
+                    new PixelCheck(new Point(469, 282), new int[] { 255, 36, 110 }),
+                    new PixelCheck(new Point(466, 251), new int[] { 255, 186, 23 })
+                ),
+                delegate()
+                {
+                    // No Thanks button to close Awesome Game overlay
+                    // May require delays to close the popup properly
+                    Thread.Sleep(2500);
+                    ScreenIO.ReturnClickRelativeToGame(471, 392);
+                    Thread.Sleep(2500);
+                }
+            ),
+
+            // In-game screen
+            // Should be after the Awesome Game popup screen in the state order
+            new ScreenState(
+                new OrCheck(
+                    new AndCheck(
+                        new PixelCheck(new Point(304, 109), new int[] { 255, 254, 66 }),
+                        new PixelCheck(new Point(636, 513), new int[] { 241, 235, 66 })
+                    ),
+                    new AndCheck(
+                        new PixelCheck(new Point(54, 390), new int[] { 255, 161, 78 }),
+                        new PixelCheck(new Point(128, 398), new int[] { 255, 161, 80 })
+                    )
+                ),
+                delegate()
+                {
+                    // Make one move
+                    _bot.RunSingle();
+                }
+            ),
+
+            // +----------------------------+
+            // |  OLD UNUSED STATES BELOW!  |
+            // +----------------------------+
+            
             // Message Center popup screen
             new ScreenState(
                 new AndCheck(
@@ -123,97 +308,7 @@ namespace BejeweledBlitzEmperor
                     ScreenIO.ClickRelativeToGame(457, 414);
                     Cursor.Position = orig;
                 }
-            ),
-
-            // Awesome Game overlay screen
-            // Should be before the In-game screen in the state order
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(300, 274), new int[] { 112, 31, 197 }),
-                    new PixelCheck(new Point(329, 275), new int[] { 206, 116, 235 }),
-                    new PixelCheck(new Point(384, 233), new int[] { 151, 10, 219 })
-                ),
-                delegate()
-                {
-                    // No Thanks button to close Awesome Game overlay
-                    // May require delays to close the popup properly
-                    Thread.Sleep(2500);
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(329, 406);
-                    Cursor.Position = orig;
-                    Thread.Sleep(2500);
-                }
-            ),
-
-            // Rare Gem screen
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(61, 111), new int[] { 203, 74, 99 }),
-                    new PixelCheck(new Point(277, 143), new int[] { 247, 254, 198 }),
-                    new PixelCheck(new Point(463, 121), new int[] { 222, 149, 45 })
-                ),
-                delegate() {
-                    // No Thanks button
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(203, 442);
-                    Cursor.Position = orig;
-                }
-            ),
-
-            // End game screen
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(29, 94), new int[] { 255, 253, 137 }),
-                    new PixelCheck(new Point(257, 83), new int[] { 0, 219, 250 }),
-                    new PixelCheck(new Point(501, 95), new int[] { 204, 108, 1 })
-                ),
-                delegate()
-                {
-                    // X button to close friends popup
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(264, 531);
-                    Cursor.Position = orig;
-                }
-            ),
-
-            // Main screen
-            new ScreenState(
-                new AndCheck(
-                    new PixelCheck(new Point(107, 113), new int[] { 228, 169, 102 }),
-                    new PixelCheck(new Point(264, 90), new int[] { 14, 89, 239 }),
-                    new PixelCheck(new Point(416, 115), new int[] { 224, 155, 86 })
-                ),
-                delegate()
-                {
-                    // Play Now button 
-                    Point orig = Cursor.Position;
-                    ScreenIO.ClickRelativeToGame(265, 414);
-                    Cursor.Position = orig;
-
-                    // Play a game
-                    //_bot.RunTimed(80000);
-                }
-            ),
-
-            // In-game screen
-            // Should be after the Awesome Game popup screen in the state order
-            new ScreenState(
-                new OrCheck(
-                    new AndCheck(
-                        new PixelCheck(new Point(37, 108), new int[] { 225, 122, 50 }),
-                        new PixelCheck(new Point(146, 117), new int[] { 249, 142, 62 })
-                    ),
-                    new AndCheck(
-                        new PixelCheck(new Point(54, 390), new int[] { 255, 161, 78 }),
-                        new PixelCheck(new Point(128, 398), new int[] { 255, 161, 80 })
-                    )
-                ),
-                delegate()
-                {
-                    // Make one move
-                    _bot.RunSingle();
-                }
-            ),
+            )
         };
 
         // Measured from center, which is rounded up for even number box size.
@@ -240,12 +335,11 @@ namespace BejeweledBlitzEmperor
         {
             get
             {
-                return sTATES;
+                return _STATES;
             }
-
             set
             {
-                sTATES = value;
+                _STATES = value;
             }
         }
 
@@ -341,13 +435,25 @@ namespace BejeweledBlitzEmperor
 
         public static void ClickRelativeToGame(Point pt)
         {
-            ClickRelativeToBoard(pt.X, pt.Y);
+            ClickRelativeToGame(pt.X, pt.Y);
         }
 
         public static void ClickRelativeToGame(int x, int y)
         {
             Point tl = GetGameTopLeft();
             InputWrapper.LeftClick(tl.X + x, tl.Y + y);
+        }
+
+        public static void ReturnClickRelativeToGame(Point pt)
+        {
+            ReturnClickRelativeToGame(pt.X, pt.Y);
+        }
+
+        public static void ReturnClickRelativeToGame(int x, int y)
+        {
+            Point orig = Cursor.Position;
+            ScreenIO.ClickRelativeToGame(x, y);
+            Cursor.Position = orig;
         }
 
         public static void MakeMove(Move mv)
@@ -504,13 +610,14 @@ namespace BejeweledBlitzEmperor
             this.Sig = sig;
         }
 
-        public bool CompareWithinTolerance(Signature rhs, int tolerance)
+        public bool CompareWithinTolerance(Signature rhs, int tolerance, int maxMismatches)
         {
             if (this.Sig.Length != rhs.Sig.Length)
             {
                 throw new ArgumentException("Signature lengths don't match.");
             }
 
+            int mismatches = 0;
             for (int i = 0; i < this.Sig.Length; ++i)
             {
                 int[] lhsPx = IntToRGB(this.Sig[i]);
@@ -519,7 +626,11 @@ namespace BejeweledBlitzEmperor
                 {
                     if (Math.Abs(lhsPx[j] - rhsPx[j]) > tolerance)
                     {
-                        return false;
+                        ++mismatches;
+                        if (mismatches > maxMismatches)
+                        {
+                            return false;
+                        }
                     }
                 }
             }

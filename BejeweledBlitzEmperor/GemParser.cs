@@ -10,7 +10,13 @@ namespace BejeweledBlitzEmperor
     {
         private static Dictionary<Signature, Gem> _map = new Dictionary<Signature, Gem>();
 
-        public static readonly int TOLERANCE = 2;
+#if DEBUG
+        public static readonly int TOLERANCE = 16;
+        public static readonly int MAX_MISMATCHES = 0;
+#else
+        public static readonly int TOLERANCE = 16;
+        public static readonly int MAX_MISMATCHES = 1;
+#endif
 
         // HYPERCUBE SET
         private static HashSet<Signature> _set = new HashSet<Signature>();
@@ -50,10 +56,31 @@ namespace BejeweledBlitzEmperor
 
         static GemParser()
         {
-            #region Red
+#region Red
 
             // Basic RED
             AddSignature(new int[] { 16654142, 16654915, 16654656, 14684971, 16653369, 16587576, 16456503, 16325174 }, GemColor.Red, GemType.Basic);
+
+            // Basic RED (spinning)
+            AddSignature(new int[] { 16652858, 15076127, 16660061, 10158089, 11862801, 11993873, 11469327, 11534863 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 16652342, 16653372, 13572915, 10289162, 14029351, 14354974, 13307684, 13305624 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 15015223, 16653629, 11078426, 10027017, 12849703, 15667754, 12390435, 15077414 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 11997732, 13830684, 10225170, 9764873, 11864088, 13043736, 11601686, 12650006 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 16651056, 12910863, 16395600, 9961480, 10879244, 11534349, 10682379, 11272204 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 16651829, 15729688, 16659803, 10420233, 16653888, 14552097, 16654660, 14289954 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 10224397, 15995179, 8912901, 10551305, 16650797, 16650797, 16650796, 16650539 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 9633801, 12064042, 9830411, 10094098, 12519191, 16453673, 12322326, 15732261 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 11339027, 10553365, 12980002, 10027276, 13110560, 12980002, 13504291, 13373733 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 13832230, 12917297, 9437192, 16529246, 16654400, 15802688, 16655431, 16000326 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 8978439, 12720175, 8978439, 14624581, 16654916, 14491451, 16655689, 14885438 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 9175047, 12983090, 9109511, 11341600, 9043973, 10881819, 9043973, 10816282 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 9568265, 12786481, 9830410, 10290964, 10092811, 10223884, 10158348, 10289421 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 11273491, 13504034, 12979488, 15145269, 12979488, 13373219, 13373219, 13766693 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 14554413, 16325690, 16658520, 16662642, 16655172, 16655430, 16656202, 16656460 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 16588091, 16653885, 16661868, 16658005, 16655688, 16655687, 16656461, 16656460 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 16655173, 16653884, 13569826, 12192025, 15472432, 15341103, 14881836, 14750763 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 15275309, 13175581, 11601429, 10486285, 12782108, 12585242, 12388633, 12191768 }, GemColor.Red, GemType.Basic);
+            AddSignature(new int[] { 11797522, 11928080, 11865631, 9830409, 10944781, 10879245, 10682636, 10682636 }, GemColor.Red, GemType.Basic);
 
             // Fire RED
             AddSignature(new int[] { 16720191, 16720964, 16720705, 14751020, 16719418, 16653625, 16522552, 16391223 }, GemColor.Red, GemType.Fire);
@@ -81,27 +108,34 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 16724826, 16724827, 16732030, 16202594, 16740510, 16740253, 16739738, 16739480 }, GemColor.Red, GemType.Glowing);
             AddSignature(new int[] { 16723797, 16725341, 16727656, 15411787, 16739739, 16739226, 16738966, 16738453 }, GemColor.Red, GemType.Glowing);
             AddSignature(new int[] { 16727912, 16731255, 16724311, 14950462, 16737167, 16736654, 16736395, 16736137 }, GemColor.Red, GemType.Glowing);
+            AddSignature(new int[] { 16746946, 16747718, 16737171, 16736138, 16728424, 16728167, 16728165, 16727908 }, GemColor.Red, GemType.Glowing);
 
             // x2 RED
-            AddSignature(new int[] { 16777215, 15277613, 16777215, 15658734, 16060704, 16716322, 16519457, 16388385 }, GemColor.Red, GemType.X2);
+            AddSignature(new int[] { 7019041, 3737355, 5787472, 16777215, 5703179, 6752013, 3867655, 5047562 }, GemColor.Red, GemType.X2);
 
             // x3 RED
             AddSignature(new int[] { 16777215, 7212565, 16777215, 14540253, 16060704, 14487325, 16519457, 15470623 }, GemColor.Red, GemType.X3);
 
             // x4 RED
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 3474182, 10160660, 5383464, 7735311, 11184810 }, GemColor.Red, GemType.X4);
+            AddSignature(new int[] { 7019041, 15790063, 5787472, 2163204, 0, 0, 0, 4144959 }, GemColor.Red, GemType.X4);
 
             // x5 RED
-            AddSignature(new int[] { 14736861, 16777215, 14540253, 12303291, 12586265, 13372955, 14683933, 15339551 }, GemColor.Red, GemType.X5);
+            AddSignature(new int[] { 7019041, 16777215, 5787472, 16777215, 2818821, 3474183, 1769731, 2949894 }, GemColor.Red, GemType.X5);
 
             // x6 RED
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 5768715, 16777215, 5834251, 16777215 }, GemColor.Red, GemType.X6);
+            AddSignature(new int[] { 6756896, 16777215, 5787472, 13619151, 0, 8355711, 0, 8355711 }, GemColor.Red, GemType.X6);
 
             // x7 RED
-            AddSignature(new int[] { 16777215, 12064548, 16777215, 16777215, 15601695, 16716322, 16388385, 16716322 }, GemColor.Red, GemType.X7);
+            AddSignature(new int[] { 6887968, 1901317, 5787472, 16777215, 6358541, 7145230, 4916490, 5834251 }, GemColor.Red, GemType.X7);
 
             // x8 RED
-            AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 11930648, 5506315, 10750741, 7493464 }, GemColor.Red, GemType.X8);
+            AddSignature(new int[] { 7019041, 13619151, 5787472, 10461087, 0, 0, 0, 0 }, GemColor.Red, GemType.X8);
+
+            // x9 RED
+            AddSignature(new int[] { 6625823, 11513775, 5787472, 16777215, 0, 3682096, 0, 458753 }, GemColor.Red, GemType.X9);
+
+            // x10 RED
+            AddSignature(new int[] { 10319224, 1639173, 9636371, 5178634, 16777215, 16777215, 16777215, 16777215 }, GemColor.Red, GemType.X10);
 
             #endregion
 
@@ -109,6 +143,28 @@ namespace BejeweledBlitzEmperor
 
             // Basic GREEN
             AddSignature(new int[] { 4652653, 7536302, 971812, 256025, 5570184, 5897872, 1091362, 1090593 }, GemColor.Green, GemType.Basic);
+            
+            // Basic GREEN (spinning)
+            AddSignature(new int[] { 8322746, 4717933, 42253, 48143, 5963406, 5570181, 493074, 427281 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 29192, 831261, 35083, 40715, 1628463, 1232681, 162058, 96266 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 30729, 508186, 564247, 38411, 96779, 163852, 1354279, 1354535 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 31754, 1160228, 2280507, 31750, 296719, 296976, 3206736, 3273042 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 760858, 2283069, 2678339, 1497134, 1426730, 1625903, 2744646, 2546755 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 8912583, 8191672, 59159, 56596, 8257215, 8126141, 626456, 626200 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 4054368, 3007561, 31241, 44557, 4324713, 3865952, 295440, 295439 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 30217, 371477, 101645, 39947, 701980, 637468, 30730, 30217 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 98572, 232718, 2742596, 1157411, 430356, 496916, 3405397, 3405396 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 1554732, 3865183, 2152506, 907300, 2422081, 2686281, 2083896, 1951797 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 6487701, 8781510, 514332, 60440, 7077545, 7405231, 891676, 825884 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 8781509, 6618773, 59670, 52497, 7470765, 7208615, 559638, 559381 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 28421, 1623342, 33802, 41996, 2685256, 2422080, 163085, 162828 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 30473, 306964, 299793, 39435, 97291, 306196, 692505, 96522 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 31242, 1964857, 1686318, 35082, 229646, 229647, 2743365, 2810184 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 297488, 1223973, 2875207, 2219323, 763420, 830238, 3207505, 3141198 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 2876488, 5766791, 1561390, 515869, 3866210, 4193899, 1489196, 1422377 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 8060598, 8978121, 254488, 59670, 8126142, 8191680, 758810, 758554 }, GemColor.Green, GemType.Basic);
+            AddSignature(new int[] { 30729, 1039654, 1092129, 37130, 97548, 97292, 2015797, 2280251 }, GemColor.Green, GemType.Basic);
+
 
             // Fire GREEN
             AddSignature(new int[] { 4783982, 7667630, 1103141, 387354, 5701512, 6029200, 1222691, 1221922 }, GemColor.Green, GemType.Fire);
@@ -139,25 +195,31 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 7471034, 9830380, 4390784, 3735417, 10354679, 10551292, 5569931, 5569162 }, GemColor.Green, GemType.Glowing);
 
             // x2 GREEN
-            AddSignature(new int[] { 16777215, 246544, 16777215, 15658734, 48140, 50189, 49676, 49420 }, GemColor.Green, GemType.X2);
+            AddSignature(new int[] { 1072149, 12292, 5199439, 16777215, 17156, 20229, 11779, 15363 }, GemColor.Green, GemType.X2);
 
             // x3 GREEN
             AddSignature(new int[] { 16777215, 89095, 16777215, 14540253, 48140, 43275, 49676, 46604 }, GemColor.Green, GemType.X3);
 
             // x4 GREEN
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 10498, 30471, 2246436, 23302, 11184810 }, GemColor.Green, GemType.X4);
+            AddSignature(new int[] { 1072149, 15724783, 5199439, 6657, 0, 0, 0, 4144959 }, GemColor.Green, GemType.X4);
 
             // x5 GREEN
-            AddSignature(new int[] { 14541021, 16777215, 14540253, 12303291, 37641, 39946, 44299, 46091 }, GemColor.Green, GemType.X5);
+            AddSignature(new int[] { 1072149, 16777215, 5199439, 16777215, 8450, 10498, 5377, 8962 }, GemColor.Green, GemType.X5);
 
             // x6 GREEN
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 17412, 16777215, 17668, 16777215 }, GemColor.Green, GemType.X6);
+            AddSignature(new int[] { 1071381, 16777215, 5199439, 13619151, 0, 8355711, 0, 8355711 }, GemColor.Green, GemType.X6);
 
             // x7 GREEN
-            AddSignature(new int[] { 16777215, 170509, 16777215, 16777215, 46604, 50189, 49420, 50445 }, GemColor.Green, GemType.X7);
+            AddSignature(new int[] { 1071893, 6402, 5199439, 16777215, 19204, 21509, 14851, 17668 }, GemColor.Green, GemType.X7);
 
             // x8 GREEN
             AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 35849, 16644, 32264, 5598294 }, GemColor.Green, GemType.X8);
+
+            // x9 GREEN
+            AddSignature(new int[] { 1070869, 11513775, 5199439, 16777215, 0, 3094063, 0, 1536 }, GemColor.Green, GemType.X9);
+
+            // x10 GREEN
+            AddSignature(new int[] { 7313010, 5377, 28935, 15620, 16777215, 16777215, 16777215, 16777215 }, GemColor.Green, GemType.X10);
 
             #endregion
 
@@ -165,6 +227,12 @@ namespace BejeweledBlitzEmperor
 
             // Basic BLUE
             AddSignature(new int[] { 1670908, 12689, 611787, 40702, 1214204, 1213949, 1150206, 1084414 }, GemColor.Blue, GemType.Basic);
+            
+            // Basic BLUE (spinning)
+            AddSignature(new int[] { 545729, 213930, 18113, 34558, 283863, 217554, 219361, 218588 }, GemColor.Blue, GemType.Basic);
+            AddSignature(new int[] { 610231, 13974, 149951, 31230, 16561, 16560, 17084, 17853 }, GemColor.Blue, GemType.Basic);
+            AddSignature(new int[] { 1273570, 13458, 479427, 37886, 1082620, 214965, 956414, 151492 }, GemColor.Blue, GemType.Basic);
+            AddSignature(new int[] { 1273832, 876238, 17859, 40190, 815356, 749050, 750590, 684030 }, GemColor.Blue, GemType.Basic);
 
             // Fire BLUE
             AddSignature(new int[] { 1868028, 275601, 1597646, 1090814, 1411068, 1410813, 1412862, 1347070 }, GemColor.Blue, GemType.Fire);
@@ -195,25 +263,28 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 5755135, 3899118, 4035583, 3987967, 6876671, 6613247, 5758463, 5626367 }, GemColor.Blue, GemType.Glowing);
 
             // x2 BLUE
-            AddSignature(new int[] { 16777215, 3511785, 16777215, 15658734, 2791157, 2924031, 2857980, 2857466 }, GemColor.Blue, GemType.X2);
+            AddSignature(new int[] { 2378347, 861497, 5264728, 16777215, 996695, 1130343, 664635, 864077 }, GemColor.Blue, GemType.X2);
 
             // x3 BLUE
-            AddSignature(new int[] { 16777215, 1656686, 16777215, 14540253, 2791157, 2525405, 2857980, 2658796 }, GemColor.Blue, GemType.X3);
+            AddSignature(new int[] { 2378347, 331285, 5264728, 16777215, 997209, 1196909, 731459, 997467 }, GemColor.Blue, GemType.X3);
 
             // x4 BLUE
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 598069, 1728411, 2768978, 1329270, 11184810 }, GemColor.Blue, GemType.X4);
+            AddSignature(new int[] { 2378347, 15724784, 5264728, 332833, 0, 0, 0, 4144959 }, GemColor.Blue, GemType.X4);
 
             // x5 BLUE
-            AddSignature(new int[] { 14540768, 16777215, 14540253, 12303291, 2193088, 2325964, 2525664, 2658538 }, GemColor.Blue, GemType.X5);
+            AddSignature(new int[] { 2378347, 16777215, 5264728, 16777215, 465451, 598325, 266523, 465965 }, GemColor.Blue, GemType.X5);
 
             // x6 BLUE
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 996952, 16777215, 997209, 16777215 }, GemColor.Blue, GemType.X6);
+            AddSignature(new int[] { 2312295, 16777215, 5264728, 13619151, 0, 8355711, 0, 8355711 }, GemColor.Blue, GemType.X6);
 
             // x7 BLUE
-            AddSignature(new int[] { 16777215, 2782904, 16777215, 16777215, 2724590, 2924031, 2857466, 2924031 }, GemColor.Blue, GemType.X7);
+            AddSignature(new int[] { 2312553, 398109, 5264728, 16777215, 1064033, 1196909, 863819, 997209 }, GemColor.Blue, GemType.X7);
 
             // x8 BLUE
-            AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 2060470, 930900, 1861028, 5924722 }, GemColor.Blue, GemType.X8);
+            AddSignature(new int[] { 2378347, 13619151, 5264728, 10461087, 0, 0, 0, 0 }, GemColor.Blue, GemType.X8);
+
+            // x9 BLUE
+            AddSignature(new int[] { 2311781, 11513775, 5264728, 16777215, 0, 3159352, 0, 66567 }, GemColor.Blue, GemType.X9);
 
             #endregion
 
@@ -222,8 +293,29 @@ namespace BejeweledBlitzEmperor
             // Basic YELLOW
             AddSignature(new int[] { 16695311, 16711238, 16711213, 14388480, 16710437, 16710180, 16709156, 16708899 }, GemColor.Yellow, GemType.Basic);
 
+            // Basic YELLOW (spinning)
+            AddSignature(new int[] { 14454784, 16572461, 13532928, 9658113, 11236359, 12288780, 14787864, 16565540 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 15703553, 16696093, 16691202, 9787904, 11497985, 13272841, 11562240, 14462232 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16099081, 16711239, 16711177, 16372772, 15706127, 16099085, 16034832, 16428559 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16693270, 16711286, 16711172, 16034833, 16702749, 16703774, 16704287, 16705056 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16695578, 16711288, 16710932, 14060803, 16709413, 16709669, 16709925, 16709926 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16710441, 16708133, 16711221, 16688896, 16704543, 16704030, 16702493, 16701724 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16711258, 16692239, 16710693, 16706816, 16694034, 16693265, 16692241, 16560400 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16711292, 13930249, 16366347, 16711169, 14717442, 14784521, 14193160, 14258951 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16711274, 14194961, 16699398, 16711170, 16241449, 15571972, 15572228, 14587401 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16709170, 16038176, 16696835, 16711171, 16708912, 16704296, 16692995, 16691716 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16708658, 16710206, 15965952, 16708352, 16708657, 16710195, 16624387, 16033027 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16700200, 16711278, 12088832, 16697600, 16711249, 16710996, 14653446, 14062086 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 13802263, 16711279, 14392320, 16032768, 16700951, 16703265, 11497729, 11564035 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16099596, 16710963, 9000192, 15112192, 16496664, 16563226, 10775041, 10709505 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 16706848, 16711204, 10315008, 9921280, 16500260, 16637226, 9986818, 10447107 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 14465562, 16711210, 12352256, 9000448, 16709942, 16710200, 10711046, 10842631 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 9066240, 16711242, 13337088, 10448128, 16445494, 16711232, 11302921, 11895308 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 10052609, 16711223, 13994240, 10513414, 9592321, 9920513, 9592321, 9460992 }, GemColor.Yellow, GemType.Basic);
+            AddSignature(new int[] { 11958532, 16706351, 13402882, 10184708, 10710277, 10710534, 11697163, 11828748 }, GemColor.Yellow, GemType.Basic);
+
             // Coin YELLOW
-            AddSignature(new int[] { 10316319, 16775978, 16117553, 16777013, 16513092, 13148972, 15852585, 13939757 }, GemColor.Yellow, GemType.Coin);
+            AddSignature(new int[] { 15509761, 16576168, 10638101, 16170776, 16171788, 14981380, 16698128, 15907341 }, GemColor.Yellow, GemType.Coin);
 
             // Fire YELLOW
             AddSignature(new int[] { 16761364, 16777034, 16777012, 14520585, 16776230, 16775973, 16774949, 16774692 }, GemColor.Yellow, GemType.Fire);
@@ -254,22 +346,24 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 16777109, 16777170, 16777062, 15776587, 16777050, 16777048, 16777048, 16777047 }, GemColor.Yellow, GemType.Glowing);
 
             // x2 YELLOW
-            AddSignature(new int[] { 16777215, 15328521, 16777215, 15658734, 15657472, 16315392, 16118016, 15986432 }, GemColor.Yellow, GemType.X2);
+            AddSignature(new int[] { 7039506, 3749890, 5789775, 16777215, 5591808, 6578944, 3815680, 4934144 }, GemColor.Yellow, GemType.X2);
 
             // x3 YELLOW
             AddSignature(new int[] { 16777215, 7236612, 16777215, 14540253, 15657472, 14144256, 16118016, 15065344 }, GemColor.Yellow, GemType.X3);
 
             // x4 YELLOW
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 3420928, 9933824, 5328930, 7565568, 11184810 }, GemColor.Yellow, GemType.X4);
+            AddSignature(new int[] { 7039506, 15790319, 5789775, 2105344, 0, 0, 0, 4144959 }, GemColor.Yellow, GemType.X4);
 
             // x5 YELLOW
-            AddSignature(new int[] { 14737629, 16777215, 14540253, 12303291, 12236544, 13026048, 14276096, 14933760 }, GemColor.Yellow, GemType.X5);
+            AddSignature(new int[] { 7039506, 16777215, 5789775, 16777215, 2763008, 3420928, 1776128, 2894592 }, GemColor.Yellow, GemType.X5);
 
             // x6 YELLOW
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 5657600, 16777215, 5723392, 16777215 }, GemColor.Yellow, GemType.X6);
+            AddSignature(new int[] { 6776338, 16777215, 5789775, 13619151, 0, 8355711, 0, 8355711 }, GemColor.Yellow, GemType.X6);
 
             // x7 YELLOW
-            AddSignature(new int[] { 16777215, 12104967, 16777215, 16777215, 15196928, 16315392, 15986432, 16315392 }, GemColor.Yellow, GemType.X7);
+            AddSignature(new int[] { 6907922, 1907969, 5789775, 16777215, 6184192, 6973440, 4802560, 5723392 }, GemColor.Yellow, GemType.X7);
+
+            // x8 YELLOW
 
             #endregion
 
@@ -277,6 +371,27 @@ namespace BejeweledBlitzEmperor
 
             // Basic PURPLE
             AddSignature(new int[] { 10027161, 16694782, 16061941, 14356187, 16126198, 15994612, 15798257, 15667183 }, GemColor.Purple, GemType.Basic);
+
+            // Basic PURPLE (spinning)
+            AddSignature(new int[] { 13829587, 16658686, 12845252, 14818530, 12387261, 12649665, 11928502, 12190650 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16058101, 16713727, 10682531, 13636816, 14879203, 15207144, 14354907, 14682848 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16723967, 16737791, 9633939, 16676350, 16664318, 16666622, 16664574, 16666622 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16353017, 16774143, 9175180, 16706302, 16701182, 16702974, 16701438, 16703230 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 9963160, 16755455, 9175180, 16687358, 16706302, 16700158, 16706046, 16700670 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 11862197, 16722943, 10487456, 16656638, 16135158, 16665342, 14948068, 16664574 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16712191, 16655870, 16393210, 16655614, 16652542, 16325881, 16653566, 16653822 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 11272364, 16682750, 16659454, 16670718, 16653054, 16650494, 16653822, 16652542 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 9568402, 16669694, 9502865, 10355614, 15470316, 14945508, 14486493, 14158552 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 9897111, 16716031, 9306254, 9765013, 11600817, 12256443, 11666354, 11731891 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 10684067, 14221785, 9502865, 10879142, 13698257, 12321468, 12780483, 10748068 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 14094295, 16715007, 11733939, 13828307, 16652542, 16654078, 16652542, 16654334 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16735743, 16748287, 16668670, 15007973, 16679934, 16683006, 16680190, 16683518 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16764927, 16775167, 16702974, 13238474, 16709374, 16709374, 16709374, 16709630 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 16195063, 16673022, 16695294, 10420383, 16686334, 16683262, 16686590, 16683518 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 8650884, 15144935, 8519810, 15076838, 16655870, 16130550, 16656126, 16261880 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 9109643, 16665854, 9109643, 16729855, 16658942, 16660478, 16659454, 16660734 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 9306254, 16693758, 9175180, 16741887, 11012520, 16686334, 10946983, 16686078 }, GemColor.Purple, GemType.Basic);
+            AddSignature(new int[] { 11141802, 16685310, 8847495, 16667646, 10354846, 10748068, 10289309, 10027161 }, GemColor.Purple, GemType.Basic);
 
             // Fire PURPLE
             AddSignature(new int[] { 10490527, 16761598, 16129525, 14423771, 16193782, 16062196, 15865329, 15734255 }, GemColor.Purple, GemType.Fire);
@@ -307,25 +422,30 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 9180571, 14594027, 16663295, 14824959, 16737023, 16736511, 16736255, 16736255 }, GemColor.Purple, GemType.Glowing);
 
             // x2 PURPLE
-            AddSignature(new int[] { 16777215, 13377483, 16777215, 15658734, 13898451, 14488540, 14291673, 14160599 }, GemColor.Purple, GemType.X2);
+            AddSignature(new int[] { 6298464, 3278642, 5721943, 16777215, 4916811, 5834585, 3343411, 4392259 }, GemColor.Purple, GemType.X2);
 
             // x3 PURPLE
-            AddSignature(new int[] { 16777215, 6360672, 16777215, 14540253, 13898451, 12521662, 14291673, 13373899 }, GemColor.Purple, GemType.X3);
+            AddSignature(new int[] { 6298464, 1245715, 5721943, 16777215, 5047885, 6162526, 3802426, 5178959 }, GemColor.Purple, GemType.X3);
 
             // x4 PURPLE
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 3015725, 8784774, 4990284, 6686822, 11184810 }, GemColor.Purple, GemType.X4);
+            AddSignature(new int[] { 6298464, 15790064, 5721943, 1901084, 0, 0, 0, 4144959 }, GemColor.Purple, GemType.X4);
 
             // x5 PURPLE
-            AddSignature(new int[] { 14736864, 16777215, 14540253, 12303291, 10882725, 11538352, 12718273, 13242825 }, GemColor.Purple, GemType.X5);
+            AddSignature(new int[] { 6298464, 16777215, 5721943, 16777215, 2425637, 3015726, 1573400, 2556711 }, GemColor.Purple, GemType.X5);
 
             // x6 PURPLE
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 4982348, 16777215, 5047885, 16777215 }, GemColor.Purple, GemType.X6);
+            AddSignature(new int[] { 6036060, 16777215, 5721943, 13619151, 0, 8355711, 0, 8355711 }, GemColor.Purple, GemType.X6);
 
             // x7 PURPLE
             AddSignature(new int[] { 16777215, 10557601, 16777215, 16777215, 13504973, 14488540, 14160599, 14488540 }, GemColor.Purple, GemType.X7);
 
-            // x8 PURPLE (during Blazing Speed)
-            AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 10292637, 4785737, 9309325, 7231342 }, GemColor.Purple, GemType.X8);
+            // x8 PURPLE
+            AddSignature(new int[] { 6298464, 13619151, 5721943, 10461087, 0, 0, 0, 0 }, GemColor.Purple, GemType.X8);
+
+            // x9 PURPLE
+
+            // x10 PURPLE
+            AddSignature(new int[] { 9991575, 1442582, 8325759, 4457796, 16777215, 16777215, 16777215, 16777215 }, GemColor.Purple, GemType.X10);
 
             #endregion
 
@@ -333,6 +453,27 @@ namespace BejeweledBlitzEmperor
 
             // Basic ORANGE
             AddSignature(new int[] { 16706670, 16711316, 16678942, 16675341, 16710521, 16710782, 15362338, 15099169 }, GemColor.Orange, GemType.Basic);
+
+            // Basic ORANGE (spinning)
+            AddSignature(new int[] { 16711331, 16711323, 16672518, 16670721, 16710810, 16710809, 12666898, 12535568 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16699986, 16698711, 9709570, 16666112, 16707947, 16706148, 11089160, 11023368 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16693314, 16678432, 10169606, 15810048, 16683308, 16681768, 10365699, 10365442 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 14902556, 16683050, 10957062, 12923136, 10955523, 13980437, 11088134, 11153157 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 10564362, 16680760, 16670743, 10299392, 13913107, 14175764, 14241557, 14504214 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 12667158, 16684092, 16676393, 11152128, 16605726, 16671518, 16672288, 16672544 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 14505241, 16672284, 16674085, 13119744, 16671516, 16671515, 16671773, 16671772 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16146973, 16673565, 14700821, 14894601, 16669976, 16669976, 16472599, 16407062 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 12399618, 16341014, 12073482, 10760712, 15356179, 15224850, 14896401, 14765072 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 14108687, 12597768, 14440734, 11021570, 14898199, 13122569, 15226904, 12794633 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 15882520, 11808512, 16478508, 12333056, 16672030, 16672030, 16672800, 16672800 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16670744, 16212764, 16538645, 16674327, 16671002, 16671002, 16671002, 16670746 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16674852, 15030812, 16667653, 16670477, 16538135, 16407062, 16013077, 15947285 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16676914, 12206353, 16534022, 16666630, 14567951, 14370830, 14108174, 13976845 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16545330, 9643778, 15286787, 16664065, 12465669, 12399876, 12203012, 12137476 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 12466696, 14703905, 16670488, 9905408, 12729609, 12925705, 16411175, 16676140 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 13911309, 12599566, 16681779, 11020544, 15553299, 15947284, 16685119, 16685632 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 16677161, 16693323, 16685112, 16680485, 16685879, 16688187, 16683322, 16682552 }, GemColor.Orange, GemType.Basic);
+            AddSignature(new int[] { 11283457, 14443553, 12662533, 10233600, 15034654, 12331520, 10953984, 12004865 }, GemColor.Orange, GemType.Basic);
 
             // Fire ORANGE
             AddSignature(new int[] { 16772463, 16777108, 16744736, 16741647, 16776314, 16776575, 15428387, 15165218 }, GemColor.Orange, GemType.Fire);
@@ -363,24 +504,31 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 16777118, 16777145, 16758894, 16755292, 16777215, 16777215, 16762001, 16760205 }, GemColor.Orange, GemType.Glowing);
 
             // x2 ORANGE
-            AddSignature(new int[] { 16777215, 15301941, 16777215, 15658734, 16087594, 16744236, 16547115, 16415787 }, GemColor.Orange, GemType.X2);
+            AddSignature(new int[] { 7028772, 3743501, 5788496, 16777215, 5712655, 6763281, 3874058, 5056013 }, GemColor.Orange, GemType.X2);
 
             // x3 ORANGE
-            AddSignature(new int[] { 16777215, 7224089, 16777215, 14540253, 16087594, 14511654, 16547115, 15496488 }, GemColor.Orange, GemType.X3);
+            AddSignature(new int[] { 7028772, 1379077, 5788496, 16777215, 5843983, 7157266, 4399371, 5975311 }, GemColor.Orange, GemType.X3);
 
             // x4 ORANGE
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 3480073, 10177818, 5388842, 7748372, 11184810 }, GemColor.Orange, GemType.X4);
+            AddSignature(new int[] { 7028772, 15790319, 5788496, 2166789, 0, 0, 0, 4144959 }, GemColor.Orange, GemType.X4);
 
             // x5 ORANGE
-            AddSignature(new int[] { 14737373, 16777215, 14540253, 12303291, 12607265, 13395235, 14708518, 15365160 }, GemColor.Orange, GemType.X5);
+            AddSignature(new int[] { 7028772, 16777215, 5788496, 16777215, 2823431, 3480073, 1772804, 2954759 }, GemColor.Orange, GemType.X5);
 
             // x6 ORANGE
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 5778447, 16777215, 5843983, 16777215 }, GemColor.Orange, GemType.X6);
+            AddSignature(new int[] { 6766115, 16777215, 5788496, 13619151, 0, 8355711, 0, 8355711 }, GemColor.Orange, GemType.X6);
 
             // x7 ORANGE
             AddSignature(new int[] { 16777215, 12084010, 16777215, 16777215, 15627817, 16744236, 16415787, 16744236 }, GemColor.Orange, GemType.X7);
 
             // x8 ORANGE
+            AddSignature(new int[] { 7028772, 13619151, 5788496, 10461087, 0, 0, 0, 0 }, GemColor.Orange, GemType.X8);
+
+            // x9 ORANGE
+            AddSignature(new int[] { 6634787, 11513775, 5788496, 16777215, 0, 3683120, 0, 459521 }, GemColor.Orange, GemType.X9);
+
+            // x10 ORANGE
+            AddSignature(new int[] { 10324089, 1641733, 9652505, 5187341, 16777215, 16777215, 16777215, 16777215 }, GemColor.Orange, GemType.X10);
 
             #endregion
 
@@ -388,6 +536,27 @@ namespace BejeweledBlitzEmperor
 
             // Basic WHITE
             AddSignature(new int[] { 16711422, 16514043, 10855845, 14474460, 16711422, 16711422, 15198183, 14737632 }, GemColor.White, GemType.Basic);
+
+            // Basic WHITE (spinning)
+            AddSignature(new int[] { 16711422, 12369084, 11053224, 15658734, 15527148, 14079702, 14145495, 13750737 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 11513775, 10395294, 16448250, 16711422, 16448250, 15724527, 13882323 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 15066597, 16119285, 16711422, 16711422, 16711422, 15987699, 13684944 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 13027014, 15066597, 16711422, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 10855845, 11316396, 16711422, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 13816530, 11316396, 16579836, 16711422, 16250871, 16316664, 15790320 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 12500670, 15329769, 15263976, 15790320, 14342874, 15198183, 13619151 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 11974326, 15592941, 12500670, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 15198183, 14408667, 16579836, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 14408667, 9079434, 16711422, 16711422, 16579836, 16579836, 16185078 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 12369084, 11316396, 16711422, 15395562, 14540253, 14737632, 13816530 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 11250603, 15592941, 14474460, 16711422, 15198183, 16711422, 14737632 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 13882323, 15658734, 15329769, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 15263976, 14277081, 16711422, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 13684944, 9474192, 16382457, 16448250, 15921906, 15987699, 15395562 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 10855845, 15263976, 14408667, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 15263976, 13487565, 14803425, 16711422, 16711422, 16711422, 16711422 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 14342874, 11776947, 14013909, 16645629, 16250871, 16250871, 15658734 }, GemColor.White, GemType.Basic);
+            AddSignature(new int[] { 16711422, 11447982, 13684944, 16711422, 15658734, 13816530, 15000804, 13092807 }, GemColor.White, GemType.Basic);
 
             // Fire WHITE
             AddSignature(new int[] { 16777214, 16579835, 10921637, 14540252, 16777214, 16777214, 15263975, 14803424 }, GemColor.White, GemType.Fire);
@@ -415,26 +584,34 @@ namespace BejeweledBlitzEmperor
             AddSignature(new int[] { 16777215, 16777215, 13558001, 16777215, 16777215, 16777215, 16777215, 16383999 }, GemColor.White, GemType.Glowing);
 
             // x2 WHITE
-            AddSignature(new int[] { 16777215, 13158600, 16777215, 15658734, 13487565, 14079702, 13882323, 13750737 }, GemColor.White, GemType.X2);
+            AddSignature(new int[] { 6184542, 3223857, 5723991, 16777215, 4802889, 5658198, 3289650, 4276545 }, GemColor.White, GemType.X2);
 
             // x3 WHITE
-            AddSignature(new int[] { 16777215, 6184542, 16777215, 14540253, 13487565, 12171705, 13882323, 13027014 }, GemColor.White, GemType.X3);
+            AddSignature(new int[] { 6184542, 1184274, 5723991, 16777215, 4934475, 5987163, 3684408, 5000268 }, GemColor.White, GemType.X3);
 
             // x4 WHITE
-            AddSignature(new int[] { 16777215, 16777215, 16777215, 2894892, 8553090, 4868682, 6513507, 11184810 }, GemColor.White, GemType.X4);
+            AddSignature(new int[] { 6184542, 15790320, 5723991, 1842204, 0, 0, 0, 4144959 }, GemColor.White, GemType.X4);
 
             // x5 WHITE
-            AddSignature(new int[] { 14737632, 16777215, 14540253, 12303291, 10592673, 11250603, 12369084, 12895428 }, GemColor.White, GemType.X5);
+            AddSignature(new int[] { 6184542, 16777215, 5723991, 16777215, 2368548, 2960685, 1513239, 2500134 }, GemColor.White, GemType.X5);
 
             // x6 WHITE
-            AddSignature(new int[] { 16777215, 14540253, 16777215, 11184810, 4868682, 16777215, 4934475, 16777215 }, GemColor.White, GemType.X6);
+            AddSignature(new int[] { 5921370, 16777215, 5723991, 13619151, 0, 8355711, 0, 8355711 }, GemColor.White, GemType.X6);
 
             // x7 WHITE
             AddSignature(new int[] { 16777215, 10395294, 16777215, 16777215, 13092807, 14079702, 13750737, 14079702 }, GemColor.White, GemType.X7);
 
             // x8 WHITE
-            AddSignature(new int[] { 16777215, 7829367, 16777215, 6710886, 10000536, 4671303, 9013641, 7237230 }, GemColor.White, GemType.X8);
+            AddSignature(new int[] { 6184542, 13619151, 5723991, 10461087, 0, 0, 0, 0 }, GemColor.White, GemType.X8);
 
+            // x9 WHITE
+            AddSignature(new int[] { 5855577, 11513775, 5723991, 16777215, 0, 3618615, 0, 394758 }, GemColor.White, GemType.X9);
+
+            // x10 WHITE
+            AddSignature(new int[] { 9934743, 1447446, 8092539, 4342338, 16777215, 16777215, 16777215, 16777215 }, GemColor.White, GemType.X10);
+
+            // x11 WHITE
+            AddSignature(new int[] { 9934743, 5131854, 8092539, 10000536, 16777215, 16777215, 16777215, 16777215 }, GemColor.White, GemType.X11);
 
             #endregion
 
@@ -679,7 +856,7 @@ namespace BejeweledBlitzEmperor
 
             // Data for HYPERCUBE
 
-            #endregion
+#endregion
 
             // HYPERCUBE OUTPUT
             //StringBuilder sb = new StringBuilder();
@@ -715,7 +892,7 @@ namespace BejeweledBlitzEmperor
             List<Gem> matches = new List<Gem>();
             foreach (KeyValuePair<Signature, Gem> kvp in _map)
             {
-                if (sig.CompareWithinTolerance(kvp.Key, TOLERANCE))
+                if (sig.CompareWithinTolerance(kvp.Key, TOLERANCE, MAX_MISMATCHES))
                 {
                     matches.Add(kvp.Value);
                 }
@@ -730,7 +907,11 @@ namespace BejeweledBlitzEmperor
             {
                 if (matches[i].Color != matches[0].Color)
                 {
+#if DEBUG
                     throw new InvalidOperationException("Multiple color matches for the same signature.");
+#else
+                    return Gem.Get(GemColor.None, GemType.None);
+#endif
                 }
             }
             return matches[RNG.Next(matches.Count)];    // it isn't kind of great to determine the gem type by choosing randomly

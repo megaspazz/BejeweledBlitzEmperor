@@ -11,6 +11,7 @@ namespace BejeweledBlitzEmperor
         private static Dictionary<Signature, GemColor> _map = new Dictionary<Signature, GemColor>();
 
         public static readonly int TOLERANCE = 2;
+        public static readonly int MAX_MISMATCHES = 0;
 
         // HYPERCUBE SET
         //private static HashSet<Signature> _set = new HashSet<Signature>();
@@ -1044,7 +1045,7 @@ namespace BejeweledBlitzEmperor
             
             foreach (KeyValuePair<Signature, GemColor> kvp in _map)
             {
-                if (sig.CompareWithinTolerance(kvp.Key, TOLERANCE))
+                if (sig.CompareWithinTolerance(kvp.Key, TOLERANCE, MAX_MISMATCHES))
                 {
                     return kvp.Value;
                 }

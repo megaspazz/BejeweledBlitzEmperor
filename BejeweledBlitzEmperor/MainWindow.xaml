@@ -13,6 +13,7 @@
         <Button x:Name="btnSpeedTest" Content="Speed Test" Click="btnSpeedTest_Click" />
         <Button x:Name="btnRecordSquare" Content="Record Square" Click="btnRecordSquare_Click" />
         <Button x:Name="btnRecordSquareFromPause" Content="Record Square (From Pause)" Click="btnRecordSquareFromPause_Click" />
+        <Button x:Name="btnGuessSquareFromPause" Content="Guess Square (From Pause)" Click="btnGuessSquareFromPause_Click" />
         <Button x:Name="btnGetMoves" Content="GetMoves" Click="btnGetMoves_Click" />
         <Button x:Name="btnSimulateOneMove" Content="Simulate One Move" Height="80" Click="btnSimulateOneMove_Click" />
         <Button x:Name="btnRunTimedAsync" Content="Run Timed Async" Click="btnRunTimedAsync_Click" />
@@ -22,6 +23,7 @@
         <Button x:Name="btnGetScreenCheck" Content="Get Screen Check" Click="btnGetScreenCheck_Click" />
         <Button x:Name="btnGetScreenCheckImage" Content="Get Screen Check From Image" Click="btnGetScreenCheckImage_Click" />
         <Button x:Name="btnGetGameScreenPoint" Content="Get Game Screen Point" Click="btnGetGameScreenPoint_Click" />
+        <Button x:Name="btnCheckForUnknownGems" Content="Check for Unknown Gems" Click="btnCheckForUnknownGems_Click" />
         <Button x:Name="btnExecuteAllStatesAsync" Content="Execute All States Async" Click="btnExecuteAllStates_Click" />
         <Button x:Name="btnRunForeverAsync" Content="Run Forever Async" Height="120" Click="btnRunForeverAsync_Click" />
         <Button x:Name="btnStopForeverAsync" Content="Stop Forever Async" Height="120" Click="btnStopForeverAsync_Click" />

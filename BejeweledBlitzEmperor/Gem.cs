@@ -67,6 +67,10 @@ namespace BejeweledBlitzEmperor
         X6,
         X7,
         X8,
+        X9,
+        X10,
+        X11,
+        X12,
         Hypercube
     }
 }
